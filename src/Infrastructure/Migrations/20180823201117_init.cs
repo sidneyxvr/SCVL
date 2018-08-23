@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Web.Migrations
+namespace Infrastructure.Migrations
 {
     public partial class init : Migration
     {
@@ -41,9 +41,9 @@ namespace Web.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     DataNascimento = table.Column<DateTime>(nullable: false),
-                    Ativo = table.Column<bool>(nullable: false)
+                    Ativo = table.Column<bool>(nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -69,6 +69,34 @@ namespace Web.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Anuncios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Titulo = table.Column<string>(nullable: true),
+                    Autores = table.Column<string>(nullable: true),
+                    Editora = table.Column<string>(nullable: true),
+                    Categoria = table.Column<string>(nullable: true),
+                    Preco = table.Column<decimal>(nullable: false),
+                    QuantidadeDisponivel = table.Column<int>(nullable: false),
+                    Descricao = table.Column<string>(nullable: true),
+                    Ativo = table.Column<bool>(nullable: false),
+                    UsuarioId = table.Column<int>(nullable: false),
+                    UsuarioId1 = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Anuncios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Anuncios_AspNetUsers_UsuarioId1",
+                        column: x => x.UsuarioId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,6 +184,31 @@ namespace Web.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Imagens",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Caminho = table.Column<string>(nullable: true),
+                    AnuncioId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Imagens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Imagens_Anuncios_AnuncioId",
+                        column: x => x.AnuncioId,
+                        principalTable: "Anuncios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Anuncios_UsuarioId1",
+                table: "Anuncios",
+                column: "UsuarioId1");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -194,6 +247,11 @@ namespace Web.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Imagens_AnuncioId",
+                table: "Imagens",
+                column: "AnuncioId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -214,7 +272,13 @@ namespace Web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Imagens");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Anuncios");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -1,0 +1,19 @@
+﻿using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Web.AutoMapper
+{
+    public class AutoMapperProfile : Profile
+    {
+        public static MapperConfiguration RegisterMappings()
+        {
+            return new MapperConfiguration(config => {
+                config.AddProfile(new EntityToViewModelMappingProfile());
+                config.AddProfile(new ViewModelToEntityMappingProfile());
+            });
+        }
+    }
+}
