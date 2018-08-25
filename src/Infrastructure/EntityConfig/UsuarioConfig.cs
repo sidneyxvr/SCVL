@@ -15,9 +15,7 @@ namespace Infrastructure.EntityConfig
                    .HasColumnType("varchar(100)")
                    .HasMaxLength(100)
                    .IsRequired();
-
-            builder.Property(u => u.Ativo)
-                   .HasDefaultValue(true);
+            
         }
     }
 }

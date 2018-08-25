@@ -16,9 +16,9 @@ namespace Infrastructure.Services
             _repository = repository;
         }
 
-        public void Add(Anuncio anuncio)
+        public Anuncio Add(Anuncio anuncio)
         {
-            _repository.Add(anuncio);
+            return _repository.Add(anuncio);
         }
 
         public IEnumerable<Anuncio> GetAll()

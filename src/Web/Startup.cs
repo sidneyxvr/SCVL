@@ -46,6 +46,8 @@ namespace Web
 
             services.AddTransient<IAnuncioService, AnuncioService>();
             services.AddTransient<IAnuncioRepository, AnuncioRepository>();
+            services.AddTransient<IImagemService, ImagemService>();
+            services.AddTransient<IImagemRepository, ImagemRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -74,7 +76,7 @@ namespace Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Livros}/{action=Index}/{id?}");
             });
         }
     }

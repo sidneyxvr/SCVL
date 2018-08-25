@@ -1,0 +1,49 @@
+﻿@model Web.ViewModels.ImagemViewModel
+
+@{
+    ViewData["Title"] = "EditImage";
+}
+
+<h2>EditImage</h2>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditImage" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @{
+                if (Model.Id == -1)
+                {
+                    <div>
+                        <img src="~/images/default.jpg" class="img-thumbnail img-fluid" style="max-width:200px" />
+                    </div>
+                    <input asp-for="Caminho" type="hidden" />
+                    <input asp-for="AnuncioId" type="hidden" />
+                }
+                else
+                {
+                    <div>
+                        <img src="@Model.Caminho" class="img-thumbnail img-fluid" style="max-width:200px" />
+                    </div>
+                    <input asp-for="AnuncioId" type="hidden" />
+                }
+            }
+            <br />
+            <div class="form-group">
+                <label class="control-label">Selecione uma Imagem</label>
+                <input type="file" name="imagemForm" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    
+    
+</div>
+<div>
+    @Html.ActionLink("Voltar para o modo de edição", "Edit", new { id = Model.AnuncioId })
+</div>

@@ -7,7 +7,7 @@ namespace Infrastructure.Interfaces.Services
 {
     public interface IAnuncioService
     {
-        void Add(Anuncio anuncio);
+        Anuncio Add(Anuncio anuncio);
         void Update(Anuncio anuncio);
         void Remove(int id);
         Anuncio GetById(int id);

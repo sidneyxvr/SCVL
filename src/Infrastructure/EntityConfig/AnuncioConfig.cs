@@ -47,9 +47,6 @@ namespace Infrastructure.EntityConfig
                     .HasColumnType("decimal(6,2)")
                     .IsRequired();
 
-            builder.Property(a => a.Ativo)
-                    .HasDefaultValue(true);
-
             builder.HasOne(a => a.Usuario)
                    .WithMany(u => u.Anuncios)
                    .OnDelete(DeleteBehavior.Restrict);

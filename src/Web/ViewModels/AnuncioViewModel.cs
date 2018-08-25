@@ -1,9 +1,5 @@
-﻿using Infrastructure.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Web.ViewModels
 {
@@ -43,9 +39,9 @@ namespace Web.ViewModels
         [Display(Name = "Descrição")]
         [Required]
         public string Descricao { get; set; }
-        public bool Ativo { get; set; }
+        public bool Ativo { get; set; } = true;
         public int UsuarioId { get; set; }
-        public Usuario Usuario { get; set; }
-        public IEnumerable<Imagem> Imagens { get; set; }
+        public UsuarioViewModel Usuario { get; set; }
+        public IEnumerable<ImagemViewModel> Imagens { get; set; }
     }
 }

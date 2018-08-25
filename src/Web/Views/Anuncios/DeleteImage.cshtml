@@ -1,0 +1,19 @@
+﻿@model Web.ViewModels.ImagemViewModel
+
+@{
+    ViewData["Title"] = "DeleteImage";
+}
+
+<h2>DeleteImage</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <div>
+        <img src="@Model.Caminho" class="img-thumbnail img-fluid" style="max-width:200px" />
+    </div>
+    <br/>
+    <form asp-action="DeleteImage">
+        <input type="submit" value="Remover" class="btn btn-default" /> |
+        @Html.ActionLink("Voltar para o modo de edição", "Edit", new { id = Model.AnuncioId })
+    </form>
+</div>

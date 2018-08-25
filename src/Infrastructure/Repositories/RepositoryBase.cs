@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Data;
 using Infrastructure.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace Infrastructure.Repositories
@@ -13,18 +14,19 @@ namespace Infrastructure.Repositories
             _repository = repository;
         }
 
-        public void Add(TEntity obj)
+        public TEntity Add(TEntity obj)
         {
             _repository.Set<TEntity>().Add(obj);
             _repository.SaveChanges();
+            return obj;
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll()
         {
             return _repository.Set<TEntity>();
         }
 
-        public TEntity GetById(int id)
+        public virtual TEntity GetById(int id)
         {
             return _repository.Set<TEntity>().Find(id);
         }
@@ -36,10 +38,10 @@ namespace Infrastructure.Repositories
             _repository.SaveChanges();
         }
 
-        public void Update(TEntity obj)
+        public virtual void Update(TEntity obj)
         {
-            _repository.Set<TEntity>().Update(obj);
-            _repository.SaveChangesAsync();
+            _repository.Entry(obj).State = EntityState.Modified;
+            _repository.SaveChanges();
         }
     }
 }

@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Web.ViewModels.AnuncioViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+<div class="row">
+    @foreach (var item in Model)
+    {
+    <div class="col-sm-4 col-md-3 col-lg-2">
+        @{
+            if (@item.Imagens.Count() > 0)
+            {
+                <img src="@item.Imagens.ElementAt(0).Caminho" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px"/>
+            }
+        }
+        <h5>@item.Titulo</h5>
+        <h5>R$ @item.Preco</h5>
+    </div>
+    }
+</div>

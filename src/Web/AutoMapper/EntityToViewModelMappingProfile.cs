@@ -13,6 +13,7 @@ namespace Web.AutoMapper
         public EntityToViewModelMappingProfile()
         {
             CreateMap<Anuncio, AnuncioViewModel>();
+            
         }
     }
 }
