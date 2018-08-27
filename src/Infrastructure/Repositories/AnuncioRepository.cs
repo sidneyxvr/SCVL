@@ -31,7 +31,7 @@ namespace Infrastructure.Repositories
 
         public override IEnumerable<Anuncio> GetAll()
         {
-            return _repository.Anuncios.Include(a => a.Imagens).Include(a => a.Usuario);
+            return _repository.Anuncios.Include(a => a.Imagens).Include(a => a.Usuario).ToList();
         }
 
         public override Anuncio GetById(int id)

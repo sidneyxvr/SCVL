@@ -12,7 +12,9 @@
         @{
             if (@item.Imagens.Count() > 0)
             {
-                <img src="@item.Imagens.ElementAt(0).Caminho" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px"/>
+                <a asp-action="Details" asp-route-id="@item.Id">
+                    <img src="@item.Imagens.ElementAt(0).Caminho" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px"/>
+                </a>
             }
         }
         <h5>@item.Titulo</h5>

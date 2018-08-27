@@ -9,8 +9,6 @@ namespace Infrastructure.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Usuario> builder)
         {
-            builder.ToTable("Usuario");
-
             builder.Property(u => u.Nome)
                    .HasColumnType("varchar(100)")
                    .HasMaxLength(100)

@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Infrastructure.Entities;
+using Infrastructure.Enum;
 using Infrastructure.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Web.ViewModels;
 
 namespace Web.Controllers
@@ -14,10 +18,14 @@ namespace Web.Controllers
     public class LivrosController : Controller
     {
         private readonly IAnuncioService _service;
+        private readonly IUsuarioService _usuarioService;
+        private readonly IVendaService _vendaService;
 
-        public LivrosController(IAnuncioService service)
+        public LivrosController(IAnuncioService service, IUsuarioService usuarioService, IVendaService vendaService)
         {
             _service = service;
+            _usuarioService = usuarioService;
+            _vendaService = vendaService;
         }
 
         // GET: Livros
@@ -33,15 +41,42 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-
             var anuncio = _service.GetById((int)id);
-
             if(anuncio == null)
             {
                 return NotFound();
             }
-
             return View(Mapper.Map<Anuncio, AnuncioViewModel>(anuncio));
+        }
+
+        public ActionResult Comprar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var anuncio = _service.GetById((int)id);
+            if(anuncio == null)
+            {
+                return NotFound();
+            }
+            ViewBag.FormaPagamento = FormaPagamento.GetFormaPagamento();
+            var cliente = _usuarioService.GetById(new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            var venda = new Venda { VendedorId = anuncio.UsuarioId, ClienteId = cliente.Id, Cliente = cliente,
+                                    Anuncio = anuncio, AnuncioId = anuncio.Id, Vendedor = anuncio.Usuario };
+            return View(Mapper.Map<Venda, VendaViewModel>(venda));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Comprar(int id, VendaViewModel venda)
+        {
+            if(ModelState.IsValid)
+            {
+                _vendaService.Add(Mapper.Map<VendaViewModel, Venda>(venda));
+                return RedirectToAction(nameof(Index));
+            }
+            return View(venda);
         }
     }
 }

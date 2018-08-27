@@ -12,7 +12,7 @@ namespace Infrastructure.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -26,7 +26,7 @@ namespace Infrastructure.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -43,7 +43,7 @@ namespace Infrastructure.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     DataNascimento = table.Column<DateTime>(nullable: false),
-                    Ativo = table.Column<bool>(nullable: false, defaultValue: true)
+                    Ativo = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,7 +56,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -72,28 +72,27 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Anuncios",
+                name: "Anuncio",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Titulo = table.Column<string>(nullable: true),
-                    Autores = table.Column<string>(nullable: true),
-                    Editora = table.Column<string>(nullable: true),
-                    Categoria = table.Column<string>(nullable: true),
-                    Preco = table.Column<decimal>(nullable: false),
+                    Titulo = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Autores = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Editora = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
+                    Categoria = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Preco = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
                     QuantidadeDisponivel = table.Column<int>(nullable: false),
-                    Descricao = table.Column<string>(nullable: true),
+                    Descricao = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
                     Ativo = table.Column<bool>(nullable: false),
-                    UsuarioId = table.Column<int>(nullable: false),
-                    UsuarioId1 = table.Column<string>(nullable: true)
+                    UsuarioId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Anuncios", x => x.Id);
+                    table.PrimaryKey("PK_Anuncio", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Anuncios_AspNetUsers_UsuarioId1",
-                        column: x => x.UsuarioId1,
+                        name: "FK_Anuncio_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -105,7 +104,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -124,10 +123,10 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,8 +143,8 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -168,9 +167,9 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -185,29 +184,66 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Imagens",
+                name: "Imagem",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Caminho = table.Column<string>(nullable: true),
+                    Caminho = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
                     AnuncioId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Imagens", x => x.Id);
+                    table.PrimaryKey("PK_Imagem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Imagens_Anuncios_AnuncioId",
+                        name: "FK_Imagem_Anuncio_AnuncioId",
                         column: x => x.AnuncioId,
-                        principalTable: "Anuncios",
+                        principalTable: "Anuncio",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Venda",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Horario = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    FormaPagamento = table.Column<int>(nullable: false),
+                    Avaliacao = table.Column<int>(nullable: false),
+                    AnuncioId = table.Column<int>(nullable: false),
+                    VendedorId = table.Column<Guid>(nullable: false),
+                    ClienteId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Venda", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Venda_Anuncio_AnuncioId",
+                        column: x => x.AnuncioId,
+                        principalTable: "Anuncio",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Venda_AspNetUsers_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Venda_AspNetUsers_VendedorId",
+                        column: x => x.VendedorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Anuncios_UsuarioId1",
-                table: "Anuncios",
-                column: "UsuarioId1");
+                name: "IX_Anuncio_UsuarioId",
+                table: "Anuncio",
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -249,9 +285,24 @@ namespace Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Imagens_AnuncioId",
-                table: "Imagens",
+                name: "IX_Imagem_AnuncioId",
+                table: "Imagem",
                 column: "AnuncioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Venda_AnuncioId",
+                table: "Venda",
+                column: "AnuncioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Venda_ClienteId",
+                table: "Venda",
+                column: "ClienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Venda_VendedorId",
+                table: "Venda",
+                column: "VendedorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -272,13 +323,16 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Imagens");
+                name: "Imagem");
+
+            migrationBuilder.DropTable(
+                name: "Venda");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Anuncios");
+                name: "Anuncio");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

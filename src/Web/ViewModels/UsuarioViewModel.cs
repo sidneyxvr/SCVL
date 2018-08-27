@@ -17,5 +17,7 @@ namespace Web.ViewModels
         public DateTime DataNascimento { get; set; }
         public bool Ativo { get; set; } = true;
         public IEnumerable<AnuncioViewModel> Anuncios { get; set; }
+        public IEnumerable<VendaViewModel> VendasVendedor { get; set; }
+        public IEnumerable<VendaViewModel> VendasCliente { get; set; }
     }
 }

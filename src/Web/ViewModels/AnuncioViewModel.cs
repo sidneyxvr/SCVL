@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Web.ViewModels
@@ -40,8 +41,9 @@ namespace Web.ViewModels
         [Required]
         public string Descricao { get; set; }
         public bool Ativo { get; set; } = true;
-        public int UsuarioId { get; set; }
+        public Guid UsuarioId { get; set; }
         public UsuarioViewModel Usuario { get; set; }
         public IEnumerable<ImagemViewModel> Imagens { get; set; }
+        public IEnumerable<VendaViewModel> Vendas { get; set; }
     }
 }

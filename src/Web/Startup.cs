@@ -13,6 +13,8 @@ using Infrastructure.Services;
 using Infrastructure.Interfaces.Repositories;
 using AutoMapper;
 using Web.AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace Web
 {
@@ -41,13 +43,26 @@ namespace Web
 
             Mapper.Initialize(cfg => cfg.AddProfile<AutoMapperProfile>());
 
-            services.AddDefaultIdentity<Usuario>()
+            //services.AddDefaultIdentity<Usuario, ApplicationRole>()
+            //    .AddEntityFrameworkStores<SistemaDbContext>();
+
+            services.AddIdentity<Usuario, ApplicationRole>()
                 .AddEntityFrameworkStores<SistemaDbContext>();
 
             services.AddTransient<IAnuncioService, AnuncioService>();
             services.AddTransient<IAnuncioRepository, AnuncioRepository>();
             services.AddTransient<IImagemService, ImagemService>();
             services.AddTransient<IImagemRepository, ImagemRepository>();
+            services.AddTransient<IUsuarioService, UsuarioService>();
+            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+            services.AddTransient<IVendaService, VendaService>();
+            services.AddTransient<IVendaRepository, VendaRepository>();
+
+            //services.Configure<SecurityStampValidatorOptions>(options =>
+            //{
+            //    // enables immediate logout, after updating the user's stat.
+            //    options.ValidationInterval = TimeSpan.Zero;
+            //});
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

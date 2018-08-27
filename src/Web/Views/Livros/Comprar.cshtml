@@ -1,0 +1,66 @@
+﻿@model Web.ViewModels.VendaViewModel
+
+@{
+    ViewData["Title"] = "Comprar";
+}
+<h2>Comprar</h2>
+<hr />
+<div class="row">
+
+    <form asp-action="Comprar" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="AnuncioId" type="hidden" />
+        <input asp-for="ClienteId" type="hidden" />
+        <input asp-for="VendedorId" type="hidden" />
+        <div class="col-md-3">
+            @{
+                if (Model.Anuncio.Imagens != null)
+                {
+                    <img src="@Model.Anuncio.Imagens.ElementAt(0).Caminho" alt="@Model.Anuncio.Titulo" class="img-thumbnail" />
+                }
+                else
+                {
+                    <img src="~/images/default.jpg" class="img-thumbnail" />
+                }
+            }
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label">Título:</label> @Model.Anuncio.Titulo
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Preço:</label> @Model.Anuncio.Preco
+            </div>
+            <div class="form-group">
+                <label class="control-label">Selecione a forma de pagamento</label>
+                <div class="form-group">
+                    @foreach (var item in ViewBag.FormaPagamento)
+                    {
+                        <input asp-for="FormaPagamento" type="radio" value="@item.Key" /> @item.Value
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <input asp-for="Avaliacao" id="input-id" type="text" data-step="1.0" class="rating" data-size="xs">
+            </div>
+            <div class="form-group">
+                <label class="control-label">Vendedor:</label> @Model.Vendedor.Nome
+            </div>
+            <div class="form-group">
+                <label class="control-label">Cliente</label> @Model.Cliente.Nome
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Finalizar Compra" class="btn btn-default" /> |
+                <a asp-action="Index">Voltar para a lista</a>
+            </div>
+        </div>
+    </form>
+</div>
+<hr>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $("#input-id").rating();
+    </script>
+}

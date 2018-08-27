@@ -1,60 +1,85 @@
 ﻿@model Web.ViewModels.AnuncioViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Comprar";
 }
 
-<h2>Details</h2>
+<h2>LIVRO</h2>
+<div class="row">
+    <div class="col-md-3" style="min-height:350px">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    @{
+                        if (Model.Imagens.Count() > 0)
+                        {
+                            <img src="@Model.Imagens.ElementAt(0).Caminho" alt="@Model.Titulo" class="img-thumbnail" />
+                        }
+                        else
+                        {
+                            <img src="~/images/default.jpg" class="img-thumbnail" />
+                        }
+                    }
+                </div>
+                <div class="item">
+                    @{
+                        if (Model.Imagens.Count() > 1)
+                        {
+                            <img src="@Model.Imagens.ElementAt(1).Caminho" alt="@Model.Titulo" class="img-thumbnail" />
+                        }
+                        else
+                        {
+                            <img src="~/images/default.jpg" class="img-thumbnail" />
+                        }
+                    }
+                </div>
+                <div class="item">
+                    @{
+                        if (Model.Imagens.Count() > 2)
+                        {
+                            <img src="@Model.Imagens.ElementAt(2).Caminho" alt="@Model.Titulo" class="img-thumbnail" />
+                        }
+                        else
+                        {
+                            <img src="~/images/default.jpg" class="img-thumbnail" />
+                        }
+                    }
+                </div>
+            </div>
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
 
-<div>
-    <h4>AnuncioViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Titulo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Titulo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Autores)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Autores)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Editora)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Editora)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Categoria)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Categoria)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Preco)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Preco)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.QuantidadeDisponivel)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.QuantidadeDisponivel)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    <div>
+        <h3>@Model.Titulo</h3>
+        <label class="control-label">Autores:</label> @Model.Autores <br />
+        <label class="control-label">Editora:</label> @Model.Editora <br />
+        <label class="control-label">Categoria:</label> @Model.Categoria <br />
+        <label class="control-label">Descrição:</label> @Model.Descricao<br />
+
+    </div>
+    <br />
+    <div>
+        <label>Vendedor:</label> @Model.Usuario.Nome<br />
+        <label>Avaliação:</label><br />
+    </div>
+
+    <h3>R$ @Model.Preco</h3>
+    <a asp-action="Comprar" asp-route-id="@Model.Id">
+        <div class="form-group">
+            <input type="submit" value="Comprar" class="btn btn-default" />
+        </div>
+    </a>
 </div>

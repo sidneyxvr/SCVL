@@ -4,8 +4,10 @@ using Infrastructure.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using Web.ViewModels;
 
 namespace Web.Controllers
@@ -56,6 +58,7 @@ namespace Web.Controllers
         {
             if(ModelState.IsValid)
             {
+                anuncio.UsuarioId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 var anc = _service.Add(Mapper.Map<AnuncioViewModel, Anuncio>(anuncio));
                 _imagemService.Add(imagens, anc.Id);
                 return RedirectToAction(nameof(Index));
