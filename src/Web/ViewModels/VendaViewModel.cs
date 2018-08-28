@@ -16,6 +16,7 @@ namespace Web.ViewModels
         [Display(Name = "Forma de Pagamento")]
         public int FormaPagamento { get; set; }
 
+        [Required(ErrorMessage = "Avalie o vendedor")]
         public double Avaliacao { get; set; }
         public int AnuncioId { get; set; }
         public AnuncioViewModel Anuncio { get; set; }

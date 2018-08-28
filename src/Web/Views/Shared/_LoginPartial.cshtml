@@ -11,7 +11,7 @@
             <li>
                 <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Ol&aacute; 
                 @{ if (this.User.Identity.IsAuthenticated)
-                    { @UserManager.GetUserAsync(User).Result.Nome.Split(' ')[0] } } !</a>
+                    { @UserManager.GetUserAsync(User).Result.Nome.Split(' ')[0] } }!</a>
 
 
 </li>

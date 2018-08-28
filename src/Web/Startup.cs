@@ -46,8 +46,8 @@ namespace Web
             //services.AddDefaultIdentity<Usuario, ApplicationRole>()
             //    .AddEntityFrameworkStores<SistemaDbContext>();
 
-            services.AddIdentity<Usuario, ApplicationRole>()
-                .AddEntityFrameworkStores<SistemaDbContext>();
+            services.AddDefaultIdentity<Usuario>()
+                    .AddEntityFrameworkStores<SistemaDbContext>();
 
             services.AddTransient<IAnuncioService, AnuncioService>();
             services.AddTransient<IAnuncioRepository, AnuncioRepository>();
