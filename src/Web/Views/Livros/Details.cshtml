@@ -61,25 +61,27 @@
             </a>
         </div>
     </div>
+    <div class="col-md-9">
+        <div>
+            <h3>@Model.Titulo</h3>
+            <label class="control-label">Autores:</label> @Model.Autores <br />
+            <label class="control-label">Editora:</label> @Model.Editora <br />
+            <label class="control-label">Categoria:</label> @Model.Categoria <br />
+            <label class="control-label">Descrição:</label> @Model.Descricao<br />
 
-    <div>
-        <h3>@Model.Titulo</h3>
-        <label class="control-label">Autores:</label> @Model.Autores <br />
-        <label class="control-label">Editora:</label> @Model.Editora <br />
-        <label class="control-label">Categoria:</label> @Model.Categoria <br />
-        <label class="control-label">Descrição:</label> @Model.Descricao<br />
-
-    </div>
-    <br />
-    <div>
-        <label>Vendedor:</label> @Model.Usuario.Nome<br />
-        <label>Avaliação:</label><br />
-    </div>
-
-    <h3>R$ @Model.Preco</h3>
-    <a asp-action="Comprar" asp-route-id="@Model.Id">
-        <div class="form-group">
-            <input type="submit" value="Comprar" class="btn btn-default" />
         </div>
-    </a>
+        <br />
+        <div>
+            <label class="control-label">Vendedor</label><br /><h4>@Model.Usuario.Nome</h4>
+            <input value="@ViewBag.Avaliacao" id="input-id" type="text" data-step="0.2" class="rating" data-size="xs" data-show-caption="false" readonly>
+        </div>
+
+        <h3>R$ @Model.Preco</h3>
+        <a asp-action="Comprar" asp-route-id="@Model.Id">
+            <div class="form-group">
+                <input type="submit" value="Comprar" class="btn btn-default" />
+            </div>
+        </a>
+    </div>
 </div>
+

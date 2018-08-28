@@ -12,5 +12,6 @@ namespace Infrastructure.Interfaces.Services
         void Remove(int id);
         Venda GetById(int id);
         IEnumerable<Venda> GetAll();
+        double RateById(Guid id);
     }
 }

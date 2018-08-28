@@ -26,5 +26,6 @@ namespace Infrastructure.Data
 
         public DbSet<Imagem> Imagens { get; set; }
         public DbSet<Anuncio> Anuncios { get; set; }
+        public DbSet<Venda> Vendas { get; set; }
     }
 }

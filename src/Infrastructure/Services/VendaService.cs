@@ -33,6 +33,11 @@ namespace Infrastructure.Services
             return _repository.GetById(id);
         }
 
+        public double RateById(Guid id)
+        {
+            return _repository.RateById(id);
+        }
+
         public void Remove(int id)
         {
             _repository.Remove(id);
@@ -40,7 +45,6 @@ namespace Infrastructure.Services
 
         public void Update(Venda venda)
         {
-
             _repository.Update(venda);
         }
     }

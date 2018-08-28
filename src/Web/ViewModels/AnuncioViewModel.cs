@@ -40,6 +40,7 @@ namespace Web.ViewModels
         [Display(Name = "Descrição")]
         [Required]
         public string Descricao { get; set; }
+
         public bool Ativo { get; set; } = true;
         public Guid UsuarioId { get; set; }
         public UsuarioViewModel Usuario { get; set; }

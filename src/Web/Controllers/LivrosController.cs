@@ -7,6 +7,7 @@ using AutoMapper;
 using Infrastructure.Entities;
 using Infrastructure.Enum;
 using Infrastructure.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -46,9 +47,11 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Avaliacao = _vendaService.RateById(anuncio.UsuarioId).ToString().Replace(',', '.');
             return View(Mapper.Map<Anuncio, AnuncioViewModel>(anuncio));
         }
 
+        [Authorize]
         public ActionResult Comprar(int? id)
         {
             if (id == null)
