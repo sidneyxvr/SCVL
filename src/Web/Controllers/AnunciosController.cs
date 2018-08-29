@@ -14,19 +14,19 @@ namespace Web.Controllers
 {
     public class AnunciosController : Controller
     {
-        private readonly IAnuncioService _service;
+        private readonly IAnuncioService _anuncioService;
         private readonly IImagemService _imagemService;
 
-        public AnunciosController(IAnuncioService service, IImagemService imagemService)
+        public AnunciosController(IAnuncioService anuncioService, IImagemService imagemService)
         {
-            _service = service;
+            _anuncioService = anuncioService;
             _imagemService = imagemService;
         }
 
         // GET: Anuncios
         public ActionResult Index()
         {
-            return View(Mapper.Map<IEnumerable<Anuncio>, IEnumerable<AnuncioViewModel>>(_service.GetAll().Where(i => i.Ativo == true)));
+            return View(Mapper.Map<IEnumerable<Anuncio>, IEnumerable<AnuncioViewModel>>(_anuncioService.GetAll().Where(i => i.Ativo == true)));
         }
 
         public IActionResult Details(int? id)
@@ -36,7 +36,7 @@ namespace Web.Controllers
                 return NotFound();
             }
 
-            var anuncio = _service.GetById((int)id);
+            var anuncio = _anuncioService.GetById((int)id);
             if (anuncio == null)
             {
                 return NotFound();
@@ -59,7 +59,7 @@ namespace Web.Controllers
             if(ModelState.IsValid)
             {
                 anuncio.UsuarioId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                var anc = _service.Add(Mapper.Map<AnuncioViewModel, Anuncio>(anuncio));
+                var anc = _anuncioService.Add(Mapper.Map<AnuncioViewModel, Anuncio>(anuncio));
                 _imagemService.Add(imagens, anc.Id);
                 return RedirectToAction(nameof(Index));
             }
@@ -74,7 +74,7 @@ namespace Web.Controllers
                 return NotFound();
             }
 
-            var anuncio = _service.GetById((int)id);
+            var anuncio = _anuncioService.GetById((int)id);
 
             if(anuncio == null)
             {
@@ -97,7 +97,7 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _service.Update(Mapper.Map<AnuncioViewModel, Anuncio>(anuncio));
+                    _anuncioService.Update(Mapper.Map<AnuncioViewModel, Anuncio>(anuncio));
                     return RedirectToAction(nameof(Index));
                 }
                 catch(DbUpdateConcurrencyException)
@@ -115,7 +115,7 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-            var anuncio = _service.GetById((int)id);
+            var anuncio = _anuncioService.GetById((int)id);
             if(anuncio == null)
             {
                 return NotFound();
@@ -127,7 +127,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            _service.Remove(id);
+            _anuncioService.Remove(id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -164,7 +164,6 @@ namespace Web.Controllers
             {
                 try
                 {
-                    
                     _imagemService.Update(imagemForm, Mapper.Map<ImagemViewModel, Imagem>(imagem));
                     return RedirectToAction(nameof(Index));
                 }

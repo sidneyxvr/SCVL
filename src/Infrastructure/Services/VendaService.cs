@@ -33,9 +33,21 @@ namespace Infrastructure.Services
             return _repository.GetById(id);
         }
 
+        public IEnumerable<Venda> GetVendasByCustomer(Guid CustomerId)
+        {
+            return _repository.GetVendasByCustomer(CustomerId);
+        }
+
+        public IEnumerable<Venda> GetVendasBySeller(Guid SellerId)
+        {
+            return _repository.GetVendasBySeller(SellerId);
+        }
+
         public double RateById(Guid id)
         {
-            return _repository.RateById(id);
+            var p = _repository.RateById(id);
+            var s = p;
+            return p;
         }
 
         public void Remove(int id)

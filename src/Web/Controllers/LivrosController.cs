@@ -1,30 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Infrastructure.Entities;
 using Infrastructure.Enum;
 using Infrastructure.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using Web.ViewModels;
 
 namespace Web.Controllers
 {
     public class LivrosController : Controller
     {
-        private readonly IAnuncioService _service;
+        private readonly IAnuncioService _anuncioService;
         private readonly IUsuarioService _usuarioService;
         private readonly IVendaService _vendaService;
 
-        public LivrosController(IAnuncioService service, IUsuarioService usuarioService, IVendaService vendaService)
+        public LivrosController(IAnuncioService anuncioService, IUsuarioService usuarioService, IVendaService vendaService)
         {
-            _service = service;
+            _anuncioService = anuncioService;
             _usuarioService = usuarioService;
             _vendaService = vendaService;
         }
@@ -32,7 +27,8 @@ namespace Web.Controllers
         // GET: Livros
         public ActionResult Index()
         {
-            return View(Mapper.Map<IEnumerable<Anuncio>, IEnumerable<AnuncioViewModel>>(_service.GetAll().Where(a => a.Ativo == true)));
+            return View(Mapper.Map<List<Tuple<string, IEnumerable<Anuncio>>>,
+                                   List<Tuple<string, IEnumerable<AnuncioViewModel>>>>(_anuncioService.GetGroupByCategory(3)));
         }
 
         // GET: Livros/Details/5
@@ -42,11 +38,12 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-            var anuncio = _service.GetById((int)id);
+            var anuncio = _anuncioService.GetById((int)id);
             if(anuncio == null)
             {
                 return NotFound();
             }
+            
             ViewBag.Avaliacao = _vendaService.RateById(anuncio.UsuarioId).ToString().Replace(',', '.');
             return View(Mapper.Map<Anuncio, AnuncioViewModel>(anuncio));
         }
@@ -58,7 +55,7 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-            var anuncio = _service.GetById((int)id);
+            var anuncio = _anuncioService .GetById((int)id);
             if(anuncio == null)
             {
                 return NotFound();

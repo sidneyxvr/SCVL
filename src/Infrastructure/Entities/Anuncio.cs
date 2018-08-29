@@ -11,6 +11,7 @@ namespace Infrastructure.Entities
         public string Editora { get; set; }
         public string Categoria { get; set; }
         public decimal Preco { get; set; }
+        public DateTime DataCadastro { get; set; }
         public int QuantidadeDisponivel { get; set; }
         public string Descricao { get; set; }
         public bool Ativo { get; set; }

@@ -82,6 +82,7 @@ namespace Infrastructure.Migrations
                     Editora = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     Categoria = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     Preco = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
+                    DataCadastro = table.Column<DateTime>(nullable: false),
                     QuantidadeDisponivel = table.Column<int>(nullable: false),
                     Descricao = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
                     Ativo = table.Column<bool>(nullable: false),
@@ -123,8 +124,8 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<Guid>(nullable: false)
                 },
@@ -168,8 +169,8 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    Name = table.Column<string>(maxLength: 128, nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

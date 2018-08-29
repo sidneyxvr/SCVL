@@ -1,24 +1,57 @@
-﻿@model IEnumerable<Web.ViewModels.AnuncioViewModel>
+﻿@model List<Tuple<string, IEnumerable<Web.ViewModels.AnuncioViewModel>>>
 
 @{
     ViewData["Title"] = "Bolx";
 }
 
 <h2>Bolx</h2>
+
 <div class="row">
-    @foreach (var item in Model)
-    {
-    <div class="col-sm-4 col-md-3 col-lg-2">
-        @{
-            if (@item.Imagens.Count() > 0)
-            {
-                <a asp-action="Details" asp-route-id="@item.Id">
-                    <img src="@item.Imagens.ElementAt(0).Caminho" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px"/>
-                </a>
+    <aside role="complementary" class="col-md-3">
+        <nav>
+            <ul class="list-group">
+                @{
+                    foreach (var item in Model)
+                    {
+                        <li class="list-group-item"><a asp-action="#" asp-route-id="@item.Item1">@item.Item1</a></li>
+                    }
+                }
+            </ul>
+        </nav>
+    </aside>
+    <div class="col-md-9">
+        <div class="row">
+            @{
+                foreach (var list in Model)
+                {
+                    <a>@list.Item1</a>
+                    <div class="row">
+                        @foreach (var item in list.Item2)
+                        {
+                            <div class="col-md-4" style="display: flex;justify-content: center">
+                                <div style="margin: auto">
+                                    <a asp-action="Details" asp-route-id="@item.Id">
+                                        @if (item.Imagens.Count() > 0)
+                                        {
+
+                                            <img src="@item.Imagens.ElementAt(0).Caminho" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px" />
+
+                                        }
+                                        else
+                                        {
+                                            <img src="~/images/default.jpg" />
+                                        }
+                                    </a>
+
+                                    <h5>@item.Titulo</h5>
+                                    <h5>R$ @item.Preco</h5>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <br />
+                }
             }
-        }
-        <h5>@item.Titulo</h5>
-        <h5>R$ @item.Preco</h5>
+        </div>
     </div>
-    }
 </div>

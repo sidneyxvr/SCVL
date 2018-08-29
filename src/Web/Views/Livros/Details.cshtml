@@ -16,7 +16,7 @@
             <div class="carousel-inner" role="listbox">
                 <div class="item active">
                     @{
-                        if (Model.Imagens.Count() > 0)
+                        if (Model.Imagens != null)
                         {
                             <img src="@Model.Imagens.ElementAt(0).Caminho" alt="@Model.Titulo" class="img-thumbnail" />
                         }
@@ -28,7 +28,7 @@
                 </div>
                 <div class="item">
                     @{
-                        if (Model.Imagens.Count() > 1)
+                        if (Model.Imagens != null && Model.Imagens.Count() > 1)
                         {
                             <img src="@Model.Imagens.ElementAt(1).Caminho" alt="@Model.Titulo" class="img-thumbnail" />
                         }
@@ -40,7 +40,7 @@
                 </div>
                 <div class="item">
                     @{
-                        if (Model.Imagens.Count() > 2)
+                        if (Model.Imagens != null && Model.Imagens.Count() > 2)
                         {
                             <img src="@Model.Imagens.ElementAt(2).Caminho" alt="@Model.Titulo" class="img-thumbnail" />
                         }

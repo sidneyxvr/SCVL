@@ -3,6 +3,7 @@ using Infrastructure.Interfaces.Repositories;
 using Infrastructure.Interfaces.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Infrastructure.Services
@@ -18,12 +19,18 @@ namespace Infrastructure.Services
 
         public Anuncio Add(Anuncio anuncio)
         {
+            anuncio.DataCadastro = DateTime.Now;
             return _repository.Add(anuncio);
         }
 
         public IEnumerable<Anuncio> GetAll()
         {
             return _repository.GetAll();
+        }
+
+        public IEnumerable<string> GetAllCategory()
+        {
+            return _repository.GetAllCategory();
         }
 
         public Anuncio GetById(int id)
@@ -39,6 +46,17 @@ namespace Infrastructure.Services
         public void Update(Anuncio anuncio)
         {
             _repository.Update(anuncio);
+        }
+        
+        public List<Tuple<string, IEnumerable<Anuncio>>> GetGroupByCategory(int amountByCategory)
+        {
+            List<Tuple<string, IEnumerable<Anuncio>>> tuples = new List<Tuple<string, IEnumerable<Anuncio>>>();
+            var groupby = _repository.GetGroupByCategory();
+            foreach (var group in groupby)
+            {
+                tuples.Add(new Tuple<string, IEnumerable<Anuncio>>(group.Key, group.AsEnumerable().Take(amountByCategory)));
+            }
+            return tuples;
         }
     }
 }

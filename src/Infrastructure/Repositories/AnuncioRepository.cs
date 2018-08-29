@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Infrastructure.Data;
 using Infrastructure.Entities;
@@ -36,7 +37,28 @@ namespace Infrastructure.Repositories
 
         public override Anuncio GetById(int id)
         {
-            return _repository.Anuncios.Include(a => a.Imagens).Include(a => a.Usuario).Where(a => a.Id == id).First();
+            return _repository.Anuncios.Include(a => a.Imagens)
+                                       .Include(a => a.Usuario)
+                                       .Where(a => a.Id == id)
+                                       .First();
+        }
+
+        public IEnumerable<string> GetAllCategory()
+        {
+            return _repository.Anuncios.Where(a => a.Ativo == true)
+                                       .OrderBy(a => a.Categoria)
+                                       .Select(a => a.Categoria)
+                                       .Distinct();
+        }
+
+        public IEnumerable<IGrouping<string, Anuncio>> GetGroupByCategory()
+        {
+            return _repository.Anuncios.Include(a => a.Imagens)
+                                       .Include(a => a.Usuario)
+                                       .ToList()
+                                       .OrderBy(a => a.Categoria)
+                                       .OrderBy(a => a.DataCadastro)
+                                       .GroupBy(a => a.Categoria);
         }
     }
 }

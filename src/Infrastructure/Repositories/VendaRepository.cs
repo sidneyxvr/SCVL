@@ -19,7 +19,12 @@ namespace Infrastructure.Repositories
 
         public double RateById(Guid id)
         {
-            return _repository.Vendas.Where(v => v.VendedorId == id).AsEnumerable().Average(v => v.Avaliacao);
+            var rate = _repository.Vendas.Where(v => v.VendedorId == id);
+            if(rate.Any())
+            {
+                return rate.AsEnumerable().Average(v => v.Avaliacao);
+            }
+            return 0.0;
         }
 
         public override IEnumerable<Venda> GetAll()
@@ -30,6 +35,16 @@ namespace Infrastructure.Repositories
         public override Venda GetById(int id)
         {
             return _repository.Vendas.Include(a => a.Anuncio).Include(v => v.Vendedor).Include(c => c.Cliente).Where(v => v.Id == id).First();
+        }
+
+        public IEnumerable<Venda> GetVendasBySeller(Guid SellerId)
+        {
+            return _repository.Vendas.Include(a => a.Anuncio).Include(v => v.Vendedor).Include(c => c.Cliente).Where(v => v.VendedorId == SellerId);
+        }
+
+        public IEnumerable<Venda> GetVendasByCustomer(Guid CustomerId)
+        {
+            return _repository.Vendas.Include(a => a.Anuncio).Include(v => v.Vendedor).Include(c => c.Cliente).Where(v => v.ClienteId == CustomerId);
         }
     }
 }

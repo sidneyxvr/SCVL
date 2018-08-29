@@ -31,6 +31,8 @@ namespace Web.ViewModels
         [Display(Name = "Preço")]
         public decimal Preco { get; set; }
 
+        public DateTime DataCadastro { get; set; }
+
         [Range(0, 999)]
         [Required]
         [Display(Name = "Quantidade Disponível")]
