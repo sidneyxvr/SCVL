@@ -45,9 +45,7 @@ namespace Infrastructure.Services
 
         public double RateById(Guid id)
         {
-            var p = _repository.RateById(id);
-            var s = p;
-            return p;
+            return _repository.RateById(id);
         }
 
         public void Remove(int id)

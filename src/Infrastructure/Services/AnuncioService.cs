@@ -58,5 +58,10 @@ namespace Infrastructure.Services
             }
             return tuples;
         }
+
+        public IEnumerable<Anuncio> GetByCategory(string category)
+        {
+            return _repository.GetByCategory(category);
+        }
     }
 }

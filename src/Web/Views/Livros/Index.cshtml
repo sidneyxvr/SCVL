@@ -1,19 +1,22 @@
 ﻿@model List<Tuple<string, IEnumerable<Web.ViewModels.AnuncioViewModel>>>
 
 @{
-    ViewData["Title"] = "Bolx";
+    ViewData["Title"] = "Boox";
 }
 
-<h2>Bolx</h2>
+<h2>Boox</h2>
 
 <div class="row">
     <aside role="complementary" class="col-md-3">
         <nav>
-            <ul class="list-group">
+            <br />
+            <ul class="list-group" style="margin-right: 10px; padding-top:19px">
+
+                <li class="list-group-item">Categorias</li>
                 @{
                     foreach (var item in Model)
                     {
-                        <li class="list-group-item"><a asp-action="#" asp-route-id="@item.Item1">@item.Item1</a></li>
+                        <li class="list-group-item"><a asp-action="ListarPorCategoria" asp-route-id="@item.Item1">@item.Item1</a></li>
                     }
                 }
             </ul>
@@ -24,29 +27,30 @@
             @{
                 foreach (var list in Model)
                 {
-                    <a>@list.Item1</a>
-                    <div class="row">
+                    <a asp-action="ListarPorCategoria" asp-route-id="@list.Item1" class="text-right"><h4>@list.Item1</h4></a>
+                    <div class="row table-bordered" style="padding: 20px; margin-left: 10px">
                         @foreach (var item in list.Item2)
                         {
-                            <div class="col-md-4" style="display: flex;justify-content: center">
+                        <a asp-action="Details" asp-route-id="@item.Id">
+                            <div class="col-md-4" style="display: flex; justify-content: center">
                                 <div style="margin: auto">
-                                    <a asp-action="Details" asp-route-id="@item.Id">
-                                        @if (item.Imagens.Count() > 0)
-                                        {
 
-                                            <img src="@item.Imagens.ElementAt(0).Caminho" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px" />
+                                    @if (item.Imagens.Count() > 0)
+                                    {
 
-                                        }
-                                        else
-                                        {
-                                            <img src="~/images/default.jpg" />
-                                        }
-                                    </a>
+                                        <img src="@item.Imagens.ElementAt(0).Caminho" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px" />
 
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/default.jpg" />
+                                    }
                                     <h5>@item.Titulo</h5>
                                     <h5>R$ @item.Preco</h5>
                                 </div>
+
                             </div>
+                        </a>
                         }
                     </div>
                     <br />

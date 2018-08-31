@@ -78,5 +78,11 @@ namespace Web.Controllers
             }
             return View(venda);
         }
+
+        public ActionResult ListarPorCategoria(string id)
+        {
+            var v = id;
+            return View(Mapper.Map<IEnumerable<Anuncio>, IEnumerable<AnuncioViewModel>>(_anuncioService.GetByCategory(id)));
+        }
     }
 }

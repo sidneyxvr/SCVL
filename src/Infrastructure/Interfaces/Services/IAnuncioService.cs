@@ -15,5 +15,6 @@ namespace Infrastructure.Interfaces.Services
         IEnumerable<Anuncio> GetAll();
         IEnumerable<string> GetAllCategory();
         List<Tuple<string, IEnumerable<Anuncio>>> GetGroupByCategory(int amountByCategory);
+        IEnumerable<Anuncio> GetByCategory(string category);
     }
 }

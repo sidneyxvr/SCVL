@@ -60,5 +60,10 @@ namespace Infrastructure.Repositories
                                        .OrderBy(a => a.DataCadastro)
                                        .GroupBy(a => a.Categoria);
         }
+
+        public IEnumerable<Anuncio> GetByCategory(string category)
+        {
+            return _repository.Anuncios.Include(i => i.Imagens).Where(a => a.Categoria == category);
+        }
     }
 }
