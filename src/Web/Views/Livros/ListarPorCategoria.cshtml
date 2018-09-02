@@ -1,37 +1,52 @@
 ﻿@model IEnumerable<Web.ViewModels.AnuncioViewModel>
 
 @{
-    ViewData["Title"] = "ListarPorCategoria";
+    ViewData["Title"] = "Listar Por Categoria";
 }
 
-<h2>Listar Por Categoria</h2>
+<h2>@Model.ElementAt(0).Categoria</h2>
 
 <div class="row">
-    @{
+    <aside role="complementary" class="col-sm-3">
+        <nav>
+            <br />
+            <ul class="list-group" style="margin-right: 10px; padding-top:19px">
+
+                <li class="list-group-item">Categorias</li>
+                @{
+                    foreach (var item in ViewBag.Categorias)
+                    {
+                        <li class="list-group-item"><a asp-action="ListarPorCategoria" asp-route-id="@item">@item</a></li>
+                    }
+                }
+            </ul>
+        </nav>
+    </aside>
+    <div class="col-md-9">
         <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-md-4" style="display: flex;justify-content: center">
-                    <div style="margin: auto">
-                        <a asp-action="Details" asp-route-id="@item.Id">
-                            @if (item.Imagens.Count() > 0)
-                            {
-
-                                <img src="@item.Imagens.ElementAt(0).Caminho" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px" />
-
-                            }
-                            else
-                            {
-                                <img src="~/images/default.jpg" />
-                            }
-                        </a>
-
-                        <h5>@item.Titulo</h5>
-                        <h5>R$ @item.Preco</h5>
-                    </div>
-                </div>
-            }
+            <div class="row table-bordered" style="padding: 20px; margin-left: 10px; margin-right: 10px; margin-top: 39px">
+                @foreach (var item in Model)
+                {
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        <div class="col-sm-6 col-md-6 col-lg-3" style="display: flex; justify-content: center">
+                            <div style="margin: auto; height: 350px">
+                                @if (item.Imagens.Count() > 0)
+                                {
+                                    <img src="@item.Imagens.ElementAt(0).Caminho" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px; height: 200px" />
+                                }
+                                else
+                                {
+                                    <img src="~/images/default.jpg" style="max-width:175px; height: 200px" />
+                                }
+                                <h4>@item.Titulo</h4>
+                                <h6 style="color: black">@item.Autores</h6>
+                                <h3>R$ @item.Preco</h3>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+            <br />
         </div>
-        <br />
-    }
+    </div>
 </div>

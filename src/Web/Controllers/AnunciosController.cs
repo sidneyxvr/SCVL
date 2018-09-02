@@ -4,10 +4,8 @@ using Infrastructure.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using Web.ViewModels;
 
 namespace Web.Controllers
@@ -56,9 +54,14 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(AnuncioViewModel anuncio, List<IFormFile> imagens)
         {
+            if(imagens.Count > 3)
+            {
+                ViewBag.Error = "Quantidade máxima de 3 imagens";
+                return View(anuncio);
+            }
             if(ModelState.IsValid)
             {
-                anuncio.UsuarioId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                //anuncio.UsuarioId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 var anc = _anuncioService.Add(Mapper.Map<AnuncioViewModel, Anuncio>(anuncio));
                 _imagemService.Add(imagens, anc.Id);
                 return RedirectToAction(nameof(Index));

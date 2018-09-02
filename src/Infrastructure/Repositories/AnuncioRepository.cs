@@ -30,15 +30,15 @@ namespace Infrastructure.Repositories
             _repository.SaveChanges();
         }
 
-        public override IEnumerable<Anuncio> GetAll()
-        {
-            return _repository.Anuncios.Include(a => a.Imagens).Include(a => a.Usuario).ToList();
-        }
+        //public override IEnumerable<Anuncio> GetAll()
+        //{
+        //    return _repository.Anuncios.Include(a => a.Imagens).Include(a => a.Usuario).ToList();
+        //}
 
         public override Anuncio GetById(int id)
         {
             return _repository.Anuncios.Include(a => a.Imagens)
-                                       .Include(a => a.Usuario)
+                                       //.Include(a => a.Usuario)
                                        .Where(a => a.Id == id)
                                        .First();
         }
@@ -54,16 +54,16 @@ namespace Infrastructure.Repositories
         public IEnumerable<IGrouping<string, Anuncio>> GetGroupByCategory()
         {
             return _repository.Anuncios.Include(a => a.Imagens)
-                                       .Include(a => a.Usuario)
+                                       //.Include(a => a.Usuario)
+                                       .Where(a => a.Ativo == true)
                                        .ToList()
                                        .OrderBy(a => a.Categoria)
-                                       .OrderBy(a => a.DataCadastro)
                                        .GroupBy(a => a.Categoria);
         }
 
         public IEnumerable<Anuncio> GetByCategory(string category)
         {
-            return _repository.Anuncios.Include(i => i.Imagens).Where(a => a.Categoria == category);
+            return _repository.Anuncios.Include(i => i.Imagens).Where(a => a.Ativo == true).Where(a => a.Categoria == category).OrderByDescending(a => a.DataCadastro);
         }
     }
 }

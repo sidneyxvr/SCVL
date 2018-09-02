@@ -1,0 +1,4 @@
+﻿1>------ Compilação iniciada: Projeto: Web, Configuração: Debug Any CPU ------
+1>Web -> C:\Users\Sidney\Desktop\Workspace\SCVL\src\Web\bin\Debug\netcoreapp2.1\Web.dll
+1>Web -> C:\Users\Sidney\Desktop\Workspace\SCVL\src\Web\bin\Debug\netcoreapp2.1\Web.Views.dll
+========== Compilar: 1 com êxito, 0 com falha, 1 atualizados, 0 ignorados ==========

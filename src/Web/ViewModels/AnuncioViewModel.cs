@@ -38,14 +38,14 @@ namespace Web.ViewModels
         [Display(Name = "Quantidade Disponível")]
         public int QuantidadeDisponivel { get; set; }
 
-        [StringLength(100, ErrorMessage = "Digite até 200 carateres no título.")]
+        [StringLength(300, ErrorMessage = "Digite até 300 carateres no título.")]
         [Display(Name = "Descrição")]
         [Required]
         public string Descricao { get; set; }
 
         public bool Ativo { get; set; } = true;
-        public Guid UsuarioId { get; set; }
-        public UsuarioViewModel Usuario { get; set; }
+        //public Guid UsuarioId { get; set; }
+        //public UsuarioViewModel Usuario { get; set; }
         public IEnumerable<ImagemViewModel> Imagens { get; set; }
         public IEnumerable<VendaViewModel> Vendas { get; set; }
     }

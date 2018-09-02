@@ -18,7 +18,11 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Adicione até 3 imagens</label>
-                <input type="file" multiple name="imagens" class="form-control"/>
+                <input type="file" multiple name="imagens" accept=".jpg, .jpeg" class="form-control"/>
+                @if (ViewBag.Error != null && ViewBag.Error != "")
+                {
+                    <span class="text-danger">@ViewBag.Error</span>
+                }
             </div>
             <div class="form-group">
                 <label asp-for="Autores" class="control-label"></label>

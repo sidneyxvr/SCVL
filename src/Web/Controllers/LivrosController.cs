@@ -28,7 +28,7 @@ namespace Web.Controllers
         public ActionResult Index()
         {
             return View(Mapper.Map<List<Tuple<string, IEnumerable<Anuncio>>>,
-                                   List<Tuple<string, IEnumerable<AnuncioViewModel>>>>(_anuncioService.GetGroupByCategory(3)));
+                                   List<Tuple<string, IEnumerable<AnuncioViewModel>>>>(_anuncioService.GetGroupByCategory(4)));
         }
 
         // GET: Livros/Details/5
@@ -44,7 +44,7 @@ namespace Web.Controllers
                 return NotFound();
             }
             
-            ViewBag.Avaliacao = _vendaService.RateById(anuncio.UsuarioId).ToString().Replace(',', '.');
+            //ViewBag.Avaliacao = _vendaService.RateById(anuncio.UsuarioId).ToString().Replace(',', '.');
             return View(Mapper.Map<Anuncio, AnuncioViewModel>(anuncio));
         }
 
@@ -62,9 +62,10 @@ namespace Web.Controllers
             }
             ViewBag.FormaPagamento = FormaPagamento.GetFormaPagamento();
             var cliente = _usuarioService.GetById(new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier)));
-            var venda = new Venda { VendedorId = anuncio.UsuarioId, ClienteId = cliente.Id, Cliente = cliente,
-                                    Anuncio = anuncio, AnuncioId = anuncio.Id, Vendedor = anuncio.Usuario };
-            return View(Mapper.Map<Venda, VendaViewModel>(venda));
+            //var venda = new Venda { VendedorId = anuncio.UsuarioId, ClienteId = cliente.Id, Cliente = cliente,
+            //                        Anuncio = anuncio, AnuncioId = anuncio.Id, Vendedor = anuncio.Usuario };
+            //return View(Mapper.Map<Venda, VendaViewModel>(venda));
+            return View(); //apagar
         }
 
         [HttpPost]
@@ -81,7 +82,7 @@ namespace Web.Controllers
 
         public ActionResult ListarPorCategoria(string id)
         {
-            var v = id;
+            ViewBag.Categorias = _anuncioService.GetAllCategory();
             return View(Mapper.Map<IEnumerable<Anuncio>, IEnumerable<AnuncioViewModel>>(_anuncioService.GetByCategory(id)));
         }
     }

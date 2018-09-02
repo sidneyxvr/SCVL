@@ -15,8 +15,8 @@ namespace Infrastructure.Entities
         public int QuantidadeDisponivel { get; set; }
         public string Descricao { get; set; }
         public bool Ativo { get; set; }
-        public Guid UsuarioId { get; set; }
-        public Usuario Usuario { get; set; }
+        //public Guid UsuarioId { get; set; }
+        //public Usuario Usuario { get; set; }
         public IEnumerable<Imagem> Imagens { get; set; }
         public IEnumerable<Venda> Vendas { get; set; }
     }

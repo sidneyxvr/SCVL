@@ -41,8 +41,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("varchar(200)")
-                        .HasMaxLength(200);
+                        .HasColumnType("varchar(300)")
+                        .HasMaxLength(300);
 
                     b.Property<string>("Editora")
                         .IsRequired()
@@ -59,7 +59,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("varchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<Guid>("UsuarioId");
+                    b.Property<Guid?>("UsuarioId");
 
                     b.HasKey("Id");
 
@@ -292,10 +292,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Entities.Anuncio", b =>
                 {
-                    b.HasOne("Infrastructure.Entities.Usuario", "Usuario")
+                    b.HasOne("Infrastructure.Entities.Usuario")
                         .WithMany("Anuncios")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("UsuarioId");
                 });
 
             modelBuilder.Entity("Infrastructure.Entities.Imagem", b =>
