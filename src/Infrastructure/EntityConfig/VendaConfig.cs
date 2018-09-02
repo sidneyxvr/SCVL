@@ -16,15 +16,15 @@ namespace Infrastructure.EntityConfig
             builder.Property(v => v.Id)
                    .ValueGeneratedOnAdd();
 
-            builder.HasOne(c => c.Cliente)
-                   .WithMany(v => v.VendasCliente)
-                   .HasForeignKey(f => f.ClienteId)
-                   .OnDelete(DeleteBehavior.Restrict);
+            //builder.HasOne(c => c.Cliente)
+            //       .WithMany(v => v.VendasCliente)
+            //       .HasForeignKey(f => f.ClienteId)
+            //       .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(v => v.Vendedor)
-                   .WithMany(u => u.VendasVendedor)
-                   .HasForeignKey(f => f.VendedorId)
-                   .OnDelete(DeleteBehavior.Restrict);
+            //builder.HasOne(v => v.Vendedor)
+            //       .WithMany(u => u.VendasVendedor)
+            //       .HasForeignKey(f => f.VendedorId)
+            //       .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(a => a.Anuncio)
                    .WithMany(v => v.Vendas)

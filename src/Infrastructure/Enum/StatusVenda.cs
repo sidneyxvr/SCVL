@@ -11,13 +11,11 @@ namespace Infrastructure.Enum
             Dictionary<int, string> d = new Dictionary<int, string>
             {
                 {0, "Notificar" },
-                {1, "Aguardando Pagamento" },
-                {2, "Pagamento Aceito" },
-                {3, "Aguardando Despacho" },
-                {4, "Despachado" },
-                {5, "Em Trânsito" },
-                {6, "Entregue" },
-                {7, "Cancelado" }
+                {1, "Aguardando Despacho" },
+                {2, "Despachado" },
+                {3, "Em Trânsito" },
+                {4, "Entregue" },
+                {5, "Cancelado" }
             };
             return d;
         }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SistemaDbContext))]
-    [Migration("20180902142044_init")]
+    [Migration("20180902220448_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -184,23 +184,23 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("Avaliacao");
 
-                    b.Property<Guid>("ClienteId");
-
                     b.Property<int>("FormaPagamento");
 
                     b.Property<DateTime>("Horario");
 
                     b.Property<int>("Status");
 
-                    b.Property<Guid>("VendedorId");
+                    b.Property<Guid?>("UsuarioId");
+
+                    b.Property<Guid?>("UsuarioId1");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AnuncioId");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("UsuarioId");
 
-                    b.HasIndex("VendedorId");
+                    b.HasIndex("UsuarioId1");
 
                     b.ToTable("Venda");
                 });
@@ -314,15 +314,13 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("AnuncioId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Infrastructure.Entities.Usuario", "Cliente")
+                    b.HasOne("Infrastructure.Entities.Usuario")
                         .WithMany("VendasCliente")
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("UsuarioId");
 
-                    b.HasOne("Infrastructure.Entities.Usuario", "Vendedor")
+                    b.HasOne("Infrastructure.Entities.Usuario")
                         .WithMany("VendasVendedor")
-                        .HasForeignKey("VendedorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("UsuarioId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

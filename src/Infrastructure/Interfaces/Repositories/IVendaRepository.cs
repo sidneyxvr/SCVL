@@ -9,5 +9,6 @@ namespace Infrastructure.Interfaces.Repositories
         double RateById(Guid id);
         IEnumerable<Venda> GetVendasBySeller(Guid SellerId);
         IEnumerable<Venda> GetVendasByCustomer(Guid CustomerId);
+        void UpdateStatus(Venda venda);
     }
 }

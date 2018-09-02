@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Web.ViewModels.VendaViewModel>
+
+@{
+    ViewData["Title"] = "Vendas";
+}
+
+<h2>Vendas</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Horario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FormaPagamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Avaliacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anuncio.Titulo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Horario)
+                </td>
+                <td>
+                    @ViewBag.Status[item.Status]
+                </td>
+                <td>
+                    @ViewBag.FormaPagamento[item.FormaPagamento]
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Avaliacao) Estrelas
+                    @*<input id="input-id" type="text" data-step="1.0" class="rating" data-size="xs" data-show-caption="false" value="@item.Avaliacao" readonly>*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Anuncio.Titulo)
+                </td>
+                <td>
+                    @Html.ActionLink("Atualizar Status", "AtualizarStatus", new {  id = item.Id  })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+        $("#input-id").rating();
+    </script>
+}

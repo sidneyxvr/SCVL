@@ -12,9 +12,9 @@ namespace Infrastructure.Entities
         public int Avaliacao { get; set; }
         public int AnuncioId { get; set; }
         public Anuncio Anuncio { get; set; }
-        public Guid VendedorId { get; set; }
-        public Usuario Vendedor { get; set; }
-        public Guid ClienteId { get; set; }
-        public Usuario Cliente { get; set; }
+        //public Guid VendedorId { get; set; }
+        //public Usuario Vendedor { get; set; }
+        //public Guid ClienteId { get; set; }
+        //public Usuario Cliente { get; set; }
     }
 }

@@ -57,5 +57,10 @@ namespace Infrastructure.Services
         {
             _repository.Update(venda);
         }
+
+        public void UpdateStatus(Venda venda)
+        {
+            _repository.UpdateStatus(venda);
+        }
     }
 }

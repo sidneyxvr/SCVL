@@ -48,24 +48,27 @@ namespace Web.Controllers
             return View(Mapper.Map<Anuncio, AnuncioViewModel>(anuncio));
         }
 
-        [Authorize]
+        //[Authorize]
         public ActionResult Comprar(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var anuncio = _anuncioService .GetById((int)id);
+            var anuncio = _anuncioService.GetById((int)id);
             if(anuncio == null)
             {
                 return NotFound();
             }
             ViewBag.FormaPagamento = FormaPagamento.GetFormaPagamento();
-            var cliente = _usuarioService.GetById(new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            //var cliente = _usuarioService.GetById(new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier)));
             //var venda = new Venda { VendedorId = anuncio.UsuarioId, ClienteId = cliente.Id, Cliente = cliente,
             //                        Anuncio = anuncio, AnuncioId = anuncio.Id, Vendedor = anuncio.Usuario };
-            //return View(Mapper.Map<Venda, VendaViewModel>(venda));
-            return View(); //apagar
+
+            var venda = new Venda { Anuncio = anuncio, AnuncioId = anuncio.Id };
+
+            return View(Mapper.Map<Venda, VendaViewModel>(venda));
+            //return View(); //apagar
         }
 
         [HttpPost]
@@ -84,6 +87,41 @@ namespace Web.Controllers
         {
             ViewBag.Categorias = _anuncioService.GetAllCategory();
             return View(Mapper.Map<IEnumerable<Anuncio>, IEnumerable<AnuncioViewModel>>(_anuncioService.GetByCategory(id)));
+        }
+
+        public ActionResult Vendas()
+        {
+            var vendas = _vendaService.GetVendasBySeller(Guid.NewGuid());
+            if(vendas == null)
+            {
+                return NotFound();
+            }
+            ViewBag.Status = StatusVenda.GetStatusVenda();
+            ViewBag.FormaPagamento = FormaPagamento.GetFormaPagamento();
+            return View(Mapper.Map<IEnumerable<Venda>, IEnumerable<VendaViewModel>>(vendas));
+        }
+
+        public ActionResult AtualizarStatus(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            ViewBag.Status = StatusVenda.GetStatusVenda();
+            ViewBag.FormaPagamento = FormaPagamento.GetFormaPagamento();
+            return View(Mapper.Map<Venda, VendaViewModel>(_vendaService.GetById((int)id)));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AtualizarStatus(int? id, VendaViewModel venda)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            _vendaService.UpdateStatus(Mapper.Map<VendaViewModel, Venda>(venda));
+            return RedirectToAction(nameof(Vendas));
         }
     }
 }

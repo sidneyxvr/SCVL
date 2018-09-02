@@ -35,6 +35,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Anuncios" asp-action="Index">Meus Anúncios</a></li>
+                    <li><a asp-area="" asp-controller="Livros" asp-action="Vendas">Minhas Vendas</a></li>
                     @if (this.User.Identity.IsAuthenticated)
                     {
                         <li><a asp-area="" asp-controller="Anuncios" asp-action="Index">Meus Anúncios</a></li>

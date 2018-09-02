@@ -215,8 +215,8 @@ namespace Infrastructure.Migrations
                     FormaPagamento = table.Column<int>(nullable: false),
                     Avaliacao = table.Column<int>(nullable: false),
                     AnuncioId = table.Column<int>(nullable: false),
-                    VendedorId = table.Column<Guid>(nullable: false),
-                    ClienteId = table.Column<Guid>(nullable: false)
+                    UsuarioId = table.Column<Guid>(nullable: true),
+                    UsuarioId1 = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -228,14 +228,14 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Venda_AspNetUsers_ClienteId",
-                        column: x => x.ClienteId,
+                        name: "FK_Venda_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Venda_AspNetUsers_VendedorId",
-                        column: x => x.VendedorId,
+                        name: "FK_Venda_AspNetUsers_UsuarioId1",
+                        column: x => x.UsuarioId1,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -296,14 +296,14 @@ namespace Infrastructure.Migrations
                 column: "AnuncioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Venda_ClienteId",
+                name: "IX_Venda_UsuarioId",
                 table: "Venda",
-                column: "ClienteId");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Venda_VendedorId",
+                name: "IX_Venda_UsuarioId1",
                 table: "Venda",
-                column: "VendedorId");
+                column: "UsuarioId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
