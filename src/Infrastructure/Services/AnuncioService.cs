@@ -63,5 +63,10 @@ namespace Infrastructure.Services
         {
             return _repository.GetByCategory(category);
         }
+
+        public IEnumerable<Anuncio> Search(string search)
+        {
+            return _repository.Search(search);
+        }
     }
 }

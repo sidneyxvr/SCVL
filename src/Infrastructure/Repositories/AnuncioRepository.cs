@@ -63,7 +63,18 @@ namespace Infrastructure.Repositories
 
         public IEnumerable<Anuncio> GetByCategory(string category)
         {
-            return _repository.Anuncios.Include(i => i.Imagens).Where(a => a.Ativo == true).Where(a => a.Categoria == category).OrderByDescending(a => a.DataCadastro);
+            return _repository.Anuncios.Include(i => i.Imagens)
+                                       .Where(a => a.Ativo == true && a.Categoria == category)
+                                       .OrderByDescending(a => a.DataCadastro);
+        }
+
+        public IEnumerable<Anuncio> Search(string search)
+        {
+            return _repository.Anuncios.Include(i => i.Imagens)
+                                       .Where(a => (a.Titulo.Contains(search)
+                                              || a.Autores.Contains(search)
+                                              || a.Categoria.Contains(search)) && a.Ativo == true)
+                                       .OrderByDescending(i => i.DataCadastro);
         }
     }
 }

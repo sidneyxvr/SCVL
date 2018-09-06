@@ -1,8 +1,10 @@
-﻿@model List<Tuple<string, IEnumerable<Web.ViewModels.AnuncioViewModel>>>
+﻿@model IEnumerable<Web.ViewModels.AnuncioViewModel>
 
 @{
-    ViewData["Title"] = "Boox";
+    ViewData["Title"] = "Pesquisar";
 }
+
+<h2>Pesquisar</h2>
 
 <div class="row">
     <aside role="complementary" class="col-sm-3">
@@ -12,26 +14,29 @@
 
                 <li class="list-group-item">Categorias</li>
                 @{
-                    foreach (var item in Model)
+                    foreach (var item in ViewBag.Categorias)
                     {
-                        <li class="list-group-item"><a asp-action="ListarPorCategoria" asp-route-id="@item.Item1">@item.Item1</a></li>
+                        <li class="list-group-item"><a asp-action="ListarPorCategoria" asp-route-id="@item">@item</a></li>
                     }
                 }
             </ul>
         </nav>
     </aside>
-    <div class="col-sm-9">
-        <div class="row" >
-            @{
-                foreach (var list in Model)
-                {
-                    <div style="margin-right: 10px"><a asp-action="ListarPorCategoria" asp-route-id="@list.Item1" class="text-right" style=""><h4>@list.Item1</h4></a></div>
-                    <div class="row table-bordered" style="padding: 20px; margin-left: 10px; margin-right: 10px">
-                        @foreach (var item in list.Item2)
-                        {
+    @{
+        if (Model == null)
+        {
+            <p>objeto não encontrado</p>
+        }
+        else
+        {
+        <div class="col-md-9">
+            <div class="row">
+                <div class="row table-bordered" style="padding: 20px; margin-left: 10px; margin-right: 10px; margin-top: 39px">
+                    @foreach (var item in Model)
+                    {
                         <a asp-action="Details" asp-route-id="@item.Id">
                             <div class="col-sm-6 col-md-6 col-lg-3" style="display: flex; justify-content: center">
-                                <div style="margin: auto; height: 300px">
+                                <div style="margin: auto; height: 350px">
                                     @if (item.Imagens.Count() > 0)
                                     {
                                         <img src="@item.Imagens.ElementAt(0).Caminho" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px; height: 200px" />
@@ -46,11 +51,11 @@
                                 </div>
                             </div>
                         </a>
-                        }
-                    </div>
-                    <br />
-                }
-            }
+                    }
+                </div>
+                <br />
+            </div>
         </div>
-    </div>
+        }
+    }
 </div>

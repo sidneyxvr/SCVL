@@ -123,5 +123,11 @@ namespace Web.Controllers
             _vendaService.UpdateStatus(Mapper.Map<VendaViewModel, Venda>(venda));
             return RedirectToAction(nameof(Vendas));
         }
+
+        public ActionResult Pesquisar(string pesquisar)
+        {
+            ViewBag.Categorias = _anuncioService.GetAllCategory();
+            return View(Mapper.Map<IEnumerable<Anuncio>, IEnumerable<AnuncioViewModel>>(_anuncioService.Search(pesquisar)));
+        }
     }
 }
