@@ -44,11 +44,11 @@ namespace Web.Controllers
                 return NotFound();
             }
             
-            //ViewBag.Avaliacao = _vendaService.RateById(anuncio.UsuarioId).ToString().Replace(',', '.');
+            ViewBag.Avaliacao = _vendaService.RateById(anuncio.UsuarioId).ToString().Replace(',', '.');
             return View(Mapper.Map<Anuncio, AnuncioViewModel>(anuncio));
         }
 
-        //[Authorize]
+        [Authorize]
         public ActionResult Comprar(int? id)
         {
             if (id == null)
@@ -61,20 +61,17 @@ namespace Web.Controllers
                 return NotFound();
             }
             ViewBag.FormaPagamento = FormaPagamento.GetFormaPagamento();
-            //var cliente = _usuarioService.GetById(new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier)));
-            //var venda = new Venda { VendedorId = anuncio.UsuarioId, ClienteId = cliente.Id, Cliente = cliente,
-            //                        Anuncio = anuncio, AnuncioId = anuncio.Id, Vendedor = anuncio.Usuario };
-
-            var venda = new Venda { Anuncio = anuncio, AnuncioId = anuncio.Id };
-
+            var cliente = _usuarioService.GetById(new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            var venda = new Venda { VendedorId = anuncio.UsuarioId, ClienteId = cliente.Id, Cliente = cliente,
+                                    Anuncio = anuncio, AnuncioId = anuncio.Id, Vendedor = anuncio.Usuario };
             return View(Mapper.Map<Venda, VendaViewModel>(venda));
-            //return View(); //apagar
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Comprar(int id, VendaViewModel venda)
         {
+            venda.Avaliacao = 0;
             if(ModelState.IsValid)
             {
                 _vendaService.Add(Mapper.Map<VendaViewModel, Venda>(venda));
@@ -91,14 +88,58 @@ namespace Web.Controllers
 
         public ActionResult Vendas()
         {
-            var vendas = _vendaService.GetVendasBySeller(Guid.NewGuid());
+            var userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var vendas = _vendaService.GetBySeller(userId);
             if(vendas == null)
+            {
+                return NotFound();
+            }
+            ViewBag.Avaliacao = _vendaService.RateById(userId).ToString().Replace(',', '.'); 
+            ViewBag.Status = StatusVenda.GetStatusVenda();
+            ViewBag.FormaPagamento = FormaPagamento.GetFormaPagamento();
+            return View(Mapper.Map<IEnumerable<Venda>, IEnumerable<VendaViewModel>>(vendas));
+        }
+
+        public ActionResult Pedidos()
+        {
+            var userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var vendas = _vendaService.GetByCustomer(userId);
+            if (vendas == null)
             {
                 return NotFound();
             }
             ViewBag.Status = StatusVenda.GetStatusVenda();
             ViewBag.FormaPagamento = FormaPagamento.GetFormaPagamento();
             return View(Mapper.Map<IEnumerable<Venda>, IEnumerable<VendaViewModel>>(vendas));
+        }
+
+
+        public ActionResult AvaliarVendedor(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var vendas = _vendaService.GetById((int)id);
+            if (vendas == null)
+            {
+                return NotFound();
+            }
+            ViewBag.Status = StatusVenda.GetStatusVenda();
+            ViewBag.FormaPagamento = FormaPagamento.GetFormaPagamento();
+            return View(Mapper.Map<Venda, VendaViewModel>(vendas));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AvaliarVendedor(int? id, VendaViewModel venda)
+        {
+            if (id != venda.Id)
+            {
+                return NotFound();
+            }
+            _vendaService.UpdateSellerStatus(venda.Id, venda.Avaliacao);
+            return RedirectToAction(nameof(Pedidos));
         }
 
         public ActionResult AtualizarStatus(int? id)

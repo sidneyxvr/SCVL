@@ -7,11 +7,11 @@
 <hr />
 <div class="row">
 
-    <form asp-action="Comprar" method="post" enctype="multipart/form-data">
+    <form asp-action="Comprar" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input asp-for="AnuncioId" type="hidden" />
-        @*<input asp-for="ClienteId" type="hidden" />
-        <input asp-for="VendedorId" type="hidden" />*@
+        <input asp-for="ClienteId" type="hidden" />
+        <input asp-for="VendedorId" type="hidden" />
         <div class="col-md-3">
             @{
                 if (Model.Anuncio.Imagens != null)
@@ -42,15 +42,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <input asp-for="Avaliacao" id="input-id" type="text" data-step="1.0" class="rating" data-size="xs" data-show-caption="false">
-                <span asp-validation-for="Avaliacao" class="text-danger"></span>
+                <input asp-for="Avaliacao" id="input-id" type="text" show-clear="false" data-min="0" data-step="1.0" class="rating" data-size="xs" data-show-caption="false">
             </div>
-            @*<div class="form-group">
+            <div class="form-group">
                 <label class="control-label">Vendedor:</label> @Model.Vendedor.Nome
             </div>
             <div class="form-group">
                 <label class="control-label">Cliente</label> @Model.Cliente.Nome
-            </div>*@
+            </div>
             <div class="form-group">
                 <input type="submit" value="Finalizar Compra" class="btn btn-default" /> |
                 <a asp-action="Index">Voltar para a lista</a>
@@ -62,6 +61,9 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-        $("#input-id").rating();
+        $("#input-id").rating({
+            'showClear': false
+        });
+        $("#input-id").val(0);
     </script>
 }

@@ -7,8 +7,9 @@ namespace Infrastructure.Interfaces.Repositories
     public interface IVendaRepository : IRepositoryBase<Venda>
     {
         double RateById(Guid id);
-        IEnumerable<Venda> GetVendasBySeller(Guid SellerId);
-        IEnumerable<Venda> GetVendasByCustomer(Guid CustomerId);
+        IEnumerable<Venda> GetBySeller(Guid SellerId);
+        IEnumerable<Venda> GetByCustomer(Guid CustomerId);
         void UpdateStatus(Venda venda);
+        void UpdateSellerStatus(int id, int rate);
     }
 }

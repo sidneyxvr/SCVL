@@ -68,5 +68,10 @@ namespace Infrastructure.Services
         {
             return _repository.Search(search);
         }
+
+        public IEnumerable<Anuncio> GetBySeller(Guid id)
+        {
+            return _repository.GetBySeller(id);
+        }
     }
 }

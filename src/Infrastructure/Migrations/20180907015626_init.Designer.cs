@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SistemaDbContext))]
-    [Migration("20180902220448_init")]
+    [Migration("20180907015626_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,11 +41,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("DataCadastro");
 
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("varchar(300)")
-                        .HasMaxLength(300);
-
                     b.Property<string>("Editora")
                         .IsRequired()
                         .HasColumnType("varchar(30)")
@@ -61,7 +56,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("varchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<Guid?>("UsuarioId");
+                    b.Property<Guid>("UsuarioId");
 
                     b.HasKey("Id");
 
@@ -184,23 +179,23 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("Avaliacao");
 
+                    b.Property<Guid>("ClienteId");
+
                     b.Property<int>("FormaPagamento");
 
                     b.Property<DateTime>("Horario");
 
                     b.Property<int>("Status");
 
-                    b.Property<Guid?>("UsuarioId");
-
-                    b.Property<Guid?>("UsuarioId1");
+                    b.Property<Guid>("VendedorId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AnuncioId");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("ClienteId");
 
-                    b.HasIndex("UsuarioId1");
+                    b.HasIndex("VendedorId");
 
                     b.ToTable("Venda");
                 });
@@ -294,9 +289,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Entities.Anuncio", b =>
                 {
-                    b.HasOne("Infrastructure.Entities.Usuario")
+                    b.HasOne("Infrastructure.Entities.Usuario", "Usuario")
                         .WithMany("Anuncios")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Infrastructure.Entities.Imagem", b =>
@@ -314,13 +310,15 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("AnuncioId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Infrastructure.Entities.Usuario")
+                    b.HasOne("Infrastructure.Entities.Usuario", "Cliente")
                         .WithMany("VendasCliente")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Infrastructure.Entities.Usuario")
+                    b.HasOne("Infrastructure.Entities.Usuario", "Vendedor")
                         .WithMany("VendasVendedor")
-                        .HasForeignKey("UsuarioId1");
+                        .HasForeignKey("VendedorId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

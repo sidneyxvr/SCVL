@@ -19,11 +19,11 @@ namespace Infrastructure.Repositories
 
         public double RateById(Guid id)
         {
-            //var rate = _repository.Vendas.Where(v => v.VendedorId == id);
-            //if(rate.Any())
-            //{
-            //    return rate.AsEnumerable().Average(v => v.Avaliacao);
-            //}
+            var rate = _repository.Vendas.Where(v => v.VendedorId == id && v.Avaliacao > 0);
+            if (rate.Any())
+            {
+                return rate.AsEnumerable().Average(v => v.Avaliacao);
+            }
             return 0.0;
         }
 
@@ -34,25 +34,33 @@ namespace Infrastructure.Repositories
 
         public override Venda GetById(int id)
         {
-            //_repository.Vendas.Include(a => a.Anuncio).Include(v => v.Vendedor).Include(c => c.Cliente).Where(v => v.Id == id).First();
-            return _repository.Vendas.Include(a => a.Anuncio).First();
+            return _repository.Vendas.Include(a => a.Anuncio).Include(v => v.Vendedor).Include(c => c.Cliente).Where(v => v.Id == id).First();
+            //return _repository.Vendas.Include(a => a.Anuncio).First();
 
         }
 
-        public IEnumerable<Venda> GetVendasBySeller(Guid SellerId)
+        public IEnumerable<Venda> GetBySeller(Guid SellerId)
         {
-            // _repository.Vendas.Include(a => a.Anuncio).Include(v => v.Vendedor).Include(c => c.Cliente).Where(v => v.VendedorId == SellerId);
-            return _repository.Vendas.Include(v => v.Anuncio).OrderByDescending(v => v.Anuncio.DataCadastro); 
+            return _repository.Vendas.Include(a => a.Anuncio).Include(v => v.Vendedor).Include(c => c.Cliente).Where(v => v.VendedorId == SellerId);
+            //return _repository.Vendas.Include(v => v.Anuncio).OrderByDescending(v => v.Anuncio.DataCadastro); 
         }
 
-        public IEnumerable<Venda> GetVendasByCustomer(Guid CustomerId)
+        public IEnumerable<Venda> GetByCustomer(Guid CustomerId)
         {
-            return null; // _repository.Vendas.Include(a => a.Anuncio).Include(v => v.Vendedor).Include(c => c.Cliente).Where(v => v.ClienteId == CustomerId);
+            return _repository.Vendas.Include(a => a.Anuncio).Include(v => v.Vendedor).Include(c => c.Cliente).Where(v => v.ClienteId == CustomerId);
         }
 
         public void UpdateStatus(Venda venda)
         {
             _repository.Entry(venda).Property("Status").IsModified = true;
+            _repository.SaveChanges();
+        }
+
+        public void UpdateSellerStatus(int id, int rate)
+        {
+            var venda = _repository.Vendas.Find(id);
+            venda.Avaliacao = rate;
+            _repository.Vendas.Update(venda);
             _repository.SaveChanges();
         }
     }

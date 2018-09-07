@@ -84,9 +84,8 @@ namespace Infrastructure.Migrations
                     Preco = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
                     DataCadastro = table.Column<DateTime>(nullable: false),
                     QuantidadeDisponivel = table.Column<int>(nullable: false),
-                    Descricao = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false),
                     Ativo = table.Column<bool>(nullable: false),
-                    UsuarioId = table.Column<Guid>(nullable: true)
+                    UsuarioId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -215,8 +214,8 @@ namespace Infrastructure.Migrations
                     FormaPagamento = table.Column<int>(nullable: false),
                     Avaliacao = table.Column<int>(nullable: false),
                     AnuncioId = table.Column<int>(nullable: false),
-                    UsuarioId = table.Column<Guid>(nullable: true),
-                    UsuarioId1 = table.Column<Guid>(nullable: true)
+                    VendedorId = table.Column<Guid>(nullable: false),
+                    ClienteId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -228,14 +227,14 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Venda_AspNetUsers_UsuarioId",
-                        column: x => x.UsuarioId,
+                        name: "FK_Venda_AspNetUsers_ClienteId",
+                        column: x => x.ClienteId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Venda_AspNetUsers_UsuarioId1",
-                        column: x => x.UsuarioId1,
+                        name: "FK_Venda_AspNetUsers_VendedorId",
+                        column: x => x.VendedorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -296,14 +295,14 @@ namespace Infrastructure.Migrations
                 column: "AnuncioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Venda_UsuarioId",
+                name: "IX_Venda_ClienteId",
                 table: "Venda",
-                column: "UsuarioId");
+                column: "ClienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Venda_UsuarioId1",
+                name: "IX_Venda_VendedorId",
                 table: "Venda",
-                column: "UsuarioId1");
+                column: "VendedorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

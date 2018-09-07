@@ -9,6 +9,7 @@ namespace Web.ViewModels
         public int Id { get; set; }
 
         [Display(Name = "Horário")]
+        [DataType(DataType.DateTime)]
         public DateTime Horario { get; set; }
         public int Status { get; set; }
 
@@ -16,14 +17,14 @@ namespace Web.ViewModels
         [Display(Name = "Forma de Pagamento")]
         public int FormaPagamento { get; set; }
 
-        [Required(ErrorMessage = "Avalie o vendedor")]
         [Display(Name = "Avaliação")]
-        public double Avaliacao { get; set; }
+        public int Avaliacao { get; set; } 
+
         public int AnuncioId { get; set; }
         public AnuncioViewModel Anuncio { get; set; }
-        //public Guid VendedorId { get; set; }
-        //public UsuarioViewModel Vendedor { get; set; }
-        //public Guid ClienteId { get; set; }
-        //public UsuarioViewModel Cliente { get; set; }
+        public Guid VendedorId { get; set; }
+        public UsuarioViewModel Vendedor { get; set; }
+        public Guid ClienteId { get; set; }
+        public UsuarioViewModel Cliente { get; set; }
     }
 }

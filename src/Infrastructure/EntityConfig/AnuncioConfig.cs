@@ -38,18 +38,13 @@ namespace Infrastructure.EntityConfig
                    .HasMaxLength(100)
                    .IsRequired();
 
-            builder.Property(a => a.Descricao)
-                   .HasColumnType("varchar(300)")
-                   .HasMaxLength(300)
-                   .IsRequired();
-
             builder.Property(a => a.Preco)
                     .HasColumnType("decimal(6,2)")
                     .IsRequired();
 
-            //builder.HasOne(a => a.Usuario)
-            //       .WithMany(u => u.Anuncios)
-            //       .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(a => a.Usuario)
+                   .WithMany(u => u.Anuncios)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

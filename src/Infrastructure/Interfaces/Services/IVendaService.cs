@@ -13,8 +13,9 @@ namespace Infrastructure.Interfaces.Services
         Venda GetById(int id);
         IEnumerable<Venda> GetAll();
         double RateById(Guid id);
-        IEnumerable<Venda> GetVendasBySeller(Guid SellerId);
-        IEnumerable<Venda> GetVendasByCustomer(Guid CustomerId);
+        IEnumerable<Venda> GetBySeller(Guid SellerId);
+        IEnumerable<Venda> GetByCustomer(Guid CustomerId);
         void UpdateStatus(Venda venda);
+        void UpdateSellerStatus(int id, int rate);
     }
 }

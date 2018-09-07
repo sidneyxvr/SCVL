@@ -10,7 +10,7 @@ namespace Infrastructure.Enum
         {
             Dictionary<int, string> d = new Dictionary<int, string>
             {
-                {0, "Notificar" },
+                {0, "Pedido Aceito" },
                 {1, "Aguardando Despacho" },
                 {2, "Despachado" },
                 {3, "Em Trânsito" },

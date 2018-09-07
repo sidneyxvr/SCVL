@@ -1,20 +1,16 @@
 ﻿@model IEnumerable<Web.ViewModels.VendaViewModel>
 
 @{
-    ViewData["Title"] = "Vendas";
+    ViewData["Title"] = "Pedidos";
 }
 
-<h2>Vendas</h2>
-<div class="text-right">
-    <h4>Média de Avaliações</h4>
-    <input id="input-id" type="text" data-step="1.0" class="rating" data-size="xs" data-show-caption="false" value="@ViewBag.Avaliacao" readonly>
-</div>
+<h2>Pedidos</h2>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                Número da venda
+                Número do pedido
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Horario)
@@ -29,7 +25,7 @@
                 Livro
             </th>
             <th>
-                Cliente
+                Vendedor
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Avaliacao)
@@ -57,20 +53,15 @@
                 @Html.DisplayFor(modelItem => item.Anuncio.Titulo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cliente.Nome)
+                @Html.DisplayFor(modelItem => item.Vendedor.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Avaliacao) Estrelas
             </td>
             <td>
-                @Html.ActionLink("Atualizar Status", "AtualizarStatus", new { id = item.Id })
+                @Html.ActionLink("Avaliar Vendendor", "AvaliarVendedor", new { id = item.Id })
             </td>
         </tr>
         }
     </tbody>
 </table>
-@section Scripts {
-    <script>
-        $("#input-id").rating();
-    </script>
-}

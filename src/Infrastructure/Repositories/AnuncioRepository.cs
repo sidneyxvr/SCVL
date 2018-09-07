@@ -18,9 +18,9 @@ namespace Infrastructure.Repositories
 
         public override void Remove(int id)
         {
-            var entity = _repository.Anuncios.Find(id);
-            entity.Ativo = false;
-            _repository.Anuncios.Update(entity);
+            var anuncio = _repository.Anuncios.Find(id);
+            anuncio.Ativo = false;
+            _repository.Anuncios.Update(anuncio);
             _repository.SaveChanges();
         }
 
@@ -30,15 +30,18 @@ namespace Infrastructure.Repositories
             _repository.SaveChanges();
         }
 
-        //public override IEnumerable<Anuncio> GetAll()
-        //{
-        //    return _repository.Anuncios.Include(a => a.Imagens).Include(a => a.Usuario).ToList();
-        //}
+        public override IEnumerable<Anuncio> GetAll()
+        {
+            return _repository.Anuncios.Include(a => a.Imagens)
+                                       .Include(a => a.Usuario)
+                                       .Where(a => a.QuantidadeDisponivel > 0)
+                                       .ToList();
+        }
 
         public override Anuncio GetById(int id)
         {
             return _repository.Anuncios.Include(a => a.Imagens)
-                                       //.Include(a => a.Usuario)
+                                       .Include(a => a.Usuario)
                                        .Where(a => a.Id == id)
                                        .First();
         }
@@ -54,8 +57,9 @@ namespace Infrastructure.Repositories
         public IEnumerable<IGrouping<string, Anuncio>> GetGroupByCategory()
         {
             return _repository.Anuncios.Include(a => a.Imagens)
-                                       //.Include(a => a.Usuario)
-                                       .Where(a => a.Ativo == true)
+                                       .Include(a => a.Usuario)
+                                       .Where(a => a.Ativo == true 
+                                              && a.QuantidadeDisponivel > 0)
                                        .ToList()
                                        .OrderBy(a => a.Categoria)
                                        .GroupBy(a => a.Categoria);
@@ -75,6 +79,21 @@ namespace Infrastructure.Repositories
                                               || a.Autores.Contains(search)
                                               || a.Categoria.Contains(search)) && a.Ativo == true)
                                        .OrderByDescending(i => i.DataCadastro);
+        }
+
+        public IEnumerable<Anuncio> GetBySeller(Guid id)
+        {
+            return _repository.Anuncios.Include(i => i.Usuario)
+                                       .Where(a => a.UsuarioId == id)
+                                       .OrderByDescending(a => a.DataCadastro);
+        }
+
+        public void Sell(int id)
+        {
+            var anuncio = _repository.Anuncios.Find(id);
+            anuncio.QuantidadeDisponivel--;
+            _repository.Anuncios.Update(anuncio);
+            _repository.SaveChanges();
         }
     }
 }
