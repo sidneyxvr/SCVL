@@ -10,17 +10,28 @@ namespace Infrastructure.Services
     public class VendaService : IVendaService
     {
         private readonly IVendaRepository _repository;
+        private readonly IAnuncioRepository _anuncioRepository;
 
-        public VendaService(IVendaRepository repository)
+        public VendaService(IVendaRepository repository, IAnuncioRepository anuncioRepository)
         {
             _repository = repository;
+            _anuncioRepository = anuncioRepository;
         }
 
         public Venda Add(Venda venda)
         {
-            venda.Id = 0;
-            venda.Horario = DateTime.Now;
-            return _repository.Add(venda);
+            try
+            {
+                venda.Id = 0;
+                venda.Horario = DateTime.Now;
+                _anuncioRepository.Sell(venda.AnuncioId);
+                return _repository.Add(venda);
+            }
+            catch(Exception e)
+            {
+                var c = e.Message;
+                return null;
+            }
         }
 
         public IEnumerable<Venda> GetAll()
@@ -33,14 +44,14 @@ namespace Infrastructure.Services
             return _repository.GetById(id);
         }
 
-        public IEnumerable<Venda> GetVendasByCustomer(Guid CustomerId)
+        public IEnumerable<Venda> GetByCustomer(Guid CustomerId)
         {
-            return _repository.GetVendasByCustomer(CustomerId);
+            return _repository.GetByCustomer(CustomerId);
         }
 
-        public IEnumerable<Venda> GetVendasBySeller(Guid SellerId)
+        public IEnumerable<Venda> GetBySeller(Guid SellerId)
         {
-            return _repository.GetVendasBySeller(SellerId);
+            return _repository.GetBySeller(SellerId);
         }
 
         public double RateById(Guid id)
@@ -56,6 +67,16 @@ namespace Infrastructure.Services
         public void Update(Venda venda)
         {
             _repository.Update(venda);
+        }
+
+        public void UpdateStatus(Venda venda)
+        {
+            _repository.UpdateStatus(venda);
+        }
+
+        public void UpdateSellerStatus(int id, int rate)
+        {
+            _repository.UpdateSellerStatus(id, rate);
         }
     }
 }

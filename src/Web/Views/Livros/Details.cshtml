@@ -66,7 +66,6 @@
             <label class="control-label">Autores:</label> @Model.Autores <br />
             <label class="control-label">Editora:</label> @Model.Editora <br />
             <label class="control-label">Categoria:</label> @Model.Categoria <br />
-            <label class="control-label">Descrição:</label><div class="text-justify">@Model.Descricao</div><br />
         </div>
         <br />
         <div>
@@ -78,7 +77,7 @@
         
         <div class="form-group">
             <a asp-action="Comprar" asp-route-id="@Model.Id">
-                <input type="submit" value="Comprar" class="btn btn-default" disabled />
+                <input type="submit" value="Comprar" class="btn btn-default" />
             </a>
         </div>
         

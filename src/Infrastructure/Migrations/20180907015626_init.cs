@@ -84,9 +84,8 @@ namespace Infrastructure.Migrations
                     Preco = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
                     DataCadastro = table.Column<DateTime>(nullable: false),
                     QuantidadeDisponivel = table.Column<int>(nullable: false),
-                    Descricao = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false),
                     Ativo = table.Column<bool>(nullable: false),
-                    UsuarioId = table.Column<Guid>(nullable: true)
+                    UsuarioId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

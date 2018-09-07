@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Web.ViewModels.VendaViewModel>
+
+@{
+    ViewData["Title"] = "Pedidos";
+}
+
+<h2>Pedidos</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Número do pedido
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Horario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FormaPagamento)
+            </th>
+            <th>
+                Livro
+            </th>
+            <th>
+                Vendedor
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Avaliacao)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Horario)
+            </td>
+            <td>
+                @ViewBag.Status[item.Status]
+            </td>
+            <td>
+                @ViewBag.FormaPagamento[item.FormaPagamento]
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anuncio.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vendedor.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Avaliacao) Estrelas
+            </td>
+            <td>
+                @Html.ActionLink("Avaliar Vendendor", "AvaliarVendedor", new { id = item.Id })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

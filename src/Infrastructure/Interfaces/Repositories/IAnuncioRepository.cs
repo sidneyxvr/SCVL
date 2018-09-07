@@ -11,5 +11,8 @@ namespace Infrastructure.Interfaces.Repositories
         IEnumerable<string> GetAllCategory();
         IEnumerable<IGrouping<string, Anuncio>> GetGroupByCategory();
         IEnumerable<Anuncio> GetByCategory(string category);
+        IEnumerable<Anuncio> Search(string search);
+        IEnumerable<Anuncio> GetBySeller(Guid id);
+        void Sell(int id);
     }
 }

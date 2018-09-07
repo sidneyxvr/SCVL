@@ -4,8 +4,10 @@ using Infrastructure.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using Web.ViewModels;
 
 namespace Web.Controllers
@@ -24,7 +26,9 @@ namespace Web.Controllers
         // GET: Anuncios
         public ActionResult Index()
         {
-            return View(Mapper.Map<IEnumerable<Anuncio>, IEnumerable<AnuncioViewModel>>(_anuncioService.GetAll().Where(i => i.Ativo == true)));
+            var v = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return View(Mapper.Map<IEnumerable<Anuncio>, IEnumerable<AnuncioViewModel>>(
+                _anuncioService.GetBySeller(v).Where(i => i.Ativo == true)));
         }
 
         public IActionResult Details(int? id)
@@ -61,7 +65,7 @@ namespace Web.Controllers
             }
             if(ModelState.IsValid)
             {
-                //anuncio.UsuarioId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                anuncio.UsuarioId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 var anc = _anuncioService.Add(Mapper.Map<AnuncioViewModel, Anuncio>(anuncio));
                 _imagemService.Add(imagens, anc.Id);
                 return RedirectToAction(nameof(Index));

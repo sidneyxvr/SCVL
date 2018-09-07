@@ -1,20 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Infrastructure.Data;
+using Infrastructure.Entities;
+using Infrastructure.Interfaces.Repositories;
+using Infrastructure.Interfaces.Services;
+using Infrastructure.Repositories;
+using Infrastructure.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Infrastructure.Data;
-using Infrastructure.Entities;
-using Infrastructure.Interfaces.Services;
-using Infrastructure.Repositories;
-using Infrastructure.Services;
-using Infrastructure.Interfaces.Repositories;
-using AutoMapper;
 using Web.AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using System;
 
 namespace Web
 {
@@ -94,7 +92,10 @@ namespace Web
                     template: "{controller=Livros}/{action=Index}/{id?}");
             });
 
-            Inicialize.DbInicialize(context);
+
+            //descomentar a linha abaixo para dar uma carga no banco de dados
+            //Inicialize.DbInicialize(context);
+
         }
     }
 }

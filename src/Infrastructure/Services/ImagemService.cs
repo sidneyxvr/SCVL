@@ -21,7 +21,6 @@ namespace Infrastructure.Services
 
         public Imagem Add(IEnumerable<IFormFile> imagens, int id)
         {
-            
             foreach (var imagem in imagens)
             {
                 var cam = SaveImage(imagem);
