@@ -38,22 +38,22 @@ namespace Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Digite seu email")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Digite seu nome completo")]
             [Display(Name = "Nome Completo")]
             public string Nome { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Preencha com sua data de nascimento")]
             [Display(Name = "Data de Nascimento")]
             [DataType(DataType.Date)]
             [MyAwesomeDateValidation(ErrorMessage = "Idade deve ser de no mínimo 16 anos.")]
             public DateTime DataNascimento { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Digite sua senha")]
             [StringLength(100, ErrorMessage = "A {0} deve ser de no mínimo {2} e no máximo {1} characters.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Senha")]

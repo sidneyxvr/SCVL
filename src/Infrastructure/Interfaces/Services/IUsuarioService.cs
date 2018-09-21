@@ -8,5 +8,6 @@ namespace Infrastructure.Interfaces.Services
     public interface IUsuarioService
     {
         Usuario GetById(Guid id);
+        bool IsActive(string email);
     }
 }

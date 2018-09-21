@@ -17,6 +17,11 @@ namespace Infrastructure.Services
             _repository = repository;
         }
 
+        public bool IsActive(string email)
+        {
+            return _repository.IsActive(email);
+        }
+
         public Usuario GetById(Guid id)
         {
             return _repository.GetById(id);

@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Infrastructure.Entities;
+using System.Security.Claims;
+using Infrastructure.Interfaces.Services;
 
 namespace Web.Areas.Identity.Pages.Account
 {
@@ -16,12 +18,16 @@ namespace Web.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<Usuario> _signInManager;
+        private readonly IUsuarioService _usuarioService;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<Usuario> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<Usuario> signInManager, 
+                          ILogger<LoginModel> logger,
+                          IUsuarioService usuarioService)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _usuarioService = usuarioService;
         }
 
         [BindProperty]
@@ -36,11 +42,11 @@ namespace Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Digite seu email")]
             [EmailAddress]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Digite sua senha")]
             [DataType(DataType.Password)]
             [Display(Name = "Senha")]
             public string Password { get; set; }
@@ -76,11 +82,15 @@ namespace Web.Areas.Identity.Pages.Account
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
 
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
-                
+                if (_usuarioService.IsActive(Input.Email) == false)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+                }
+
                 if (result.Succeeded)
                 {
-                    
-                    _logger.LogInformation("User logged in.");
+                    _logger.LogInformation("Usuário logged in.");
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -94,7 +104,7 @@ namespace Web.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Tentativa de login inválida.");
                     return Page();
                 }
             }

@@ -35,25 +35,24 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (this.User.Identity.IsAuthenticated)
+                    @*@if (this.User.Identity.IsAuthenticated)
                     {
                         <li><a asp-area="" asp-controller="Anuncios" asp-action="Index">Meus Anúncios</a></li>
                         <li><a asp-area="" asp-controller="Livros" asp-action="Vendas">Minhas Vendas</a></li>
                         <li><a asp-area="" asp-controller="Livros" asp-action="Pedidos">Meus Pedidos</a></li>
-                    }
+                    }*@
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
         </div>
     </nav>
     <partial name="_CookieConsentPartial" />
-    
     <div class="container body-content">
         @*<div style="background-image: url(' @Url.Content("~/images/Livro.jpg") '); background-repeat: no-repeat; background-size: 100%; margin-top: -20px; height: 300px">
-            <div class="container" >*@
-                
-            @*</div>
-            
+        <div class="container" >*@
+
+        @*</div>
+
         </div>*@
         <a asp-controller="Livros" asp-action="Index">
             <img src="~/images/nome_logo.png" style="width: 200px" />
@@ -64,7 +63,6 @@
             <p>&copy; 2018 - Boox</p>
         </footer>
     </div>
-
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>

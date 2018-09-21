@@ -28,7 +28,7 @@ namespace Web.Controllers
         public ActionResult Index()
         {
             return View(Mapper.Map<List<Tuple<string, IEnumerable<Anuncio>>>,
-                                   List<Tuple<string, IEnumerable<AnuncioViewModel>>>>(_anuncioService.GetGroupByCategory(4)));
+                                   List<Tuple<string, IEnumerable<AnuncioViewModel>>>>(_anuncioService.GetGroupByCategory(3)));
         }
 
         // GET: Livros/Details/5
