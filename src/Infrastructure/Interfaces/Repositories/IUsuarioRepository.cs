@@ -8,5 +8,6 @@ namespace Infrastructure.Interfaces.Repositories
     public interface IUsuarioRepository
     {
         Usuario GetById(Guid id);
+        bool IsActive(string email);
     }
 }
