@@ -84,13 +84,14 @@ namespace Web.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (_usuarioService.IsActive(Input.Email) == false)
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Tentativa de login inválida.");
+                    await _signInManager.SignOutAsync();
                     return Page();
                 }
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("Usuário logged in.");
+                    _logger.LogInformation("Usuário logado.");
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

@@ -3,7 +3,16 @@
 @{
     ViewData["Title"] = "Listar Por Categoria";
 }
-
+<div class="row">
+    <form asp-action="Pesquisar" method="get">
+        <div class="form-group col-sm-offset-3 col-sm-4">
+            <input id="pesquisar" name="pesquisar" type="text" class="form-control" />
+        </div>
+        <div class="form-group col-sm-2">
+            <input type="submit" value="Pesquisar" class="btn btn-default" />
+        </div>
+    </form>
+</div>
 <h2>@Model.ElementAt(0).Categoria</h2>
 
 <div class="row">

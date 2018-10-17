@@ -39,15 +39,18 @@
                 <input asp-for="Categoria" class="form-control" />
                 <span asp-validation-for="Categoria" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Preco" class="control-label"></label>
-                <input asp-for="Preco" class="form-control" />
-                <span asp-validation-for="Preco" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="QuantidadeDisponivel" class="control-label"></label>
-                <input asp-for="QuantidadeDisponivel" class="form-control" />
-                <span asp-validation-for="QuantidadeDisponivel" class="text-danger"></span>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Preco" class="control-label"></label>
+                    <input asp-for="Preco" class="form-control" />
+                    <span asp-validation-for="Preco" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="QuantidadeDisponivel" class="control-label"></label>
+                    <input asp-for="QuantidadeDisponivel" class="form-control" />
+                    <span asp-validation-for="QuantidadeDisponivel" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Salvar" class="btn btn-default" />

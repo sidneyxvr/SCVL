@@ -82,7 +82,8 @@ namespace Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
                     
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    return RedirectToAction("Index", "Livros", new { message = "hi there!" });
+                    //return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)
                 {

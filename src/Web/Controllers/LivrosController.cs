@@ -25,8 +25,12 @@ namespace Web.Controllers
         }
 
         // GET: Livros
-        public ActionResult Index()
+        public ActionResult Index(string message)
         {
+            if(message != null)
+            {
+                ViewBag.UserCreated = "Usuário cadastrado";
+            }
             return View(Mapper.Map<List<Tuple<string, IEnumerable<Anuncio>>>,
                                    List<Tuple<string, IEnumerable<AnuncioViewModel>>>>(_anuncioService.GetGroupByCategory(3)));
         }

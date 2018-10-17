@@ -3,7 +3,22 @@
 @{
     ViewData["Title"] = "Boox";
 }
-
+@{
+    @if (ViewBag.UserCreated != null)
+    {
+        <h2 style="color:green"> @ViewBag.UserCreated </h2>
+    }
+}
+<div class="row">
+    <form asp-action="Pesquisar" method="get">
+        <div class="form-group col-sm-offset-3 col-sm-4" >
+            <input id="pesquisar" name="pesquisar" type="text" class="form-control" />
+        </div>
+        <div class="form-group col-sm-2">
+            <input type="submit" value="Pesquisar" class="btn btn-default" />
+        </div>
+    </form>
+</div>
 <div class="row">
     <aside role="complementary" class="col-sm-3">
         <nav>
@@ -21,7 +36,7 @@
         </nav>
     </aside>
     <div class="col-sm-9">
-        <div class="row" >
+        <div class="row">
             @{
                 foreach (var list in Model)
                 {
@@ -29,23 +44,23 @@
                     <div class="row table-bordered" style="padding: 20px; margin-left: 10px; margin-right: 10px">
                         @foreach (var item in list.Item2)
                         {
-                        <a asp-action="Details" asp-route-id="@item.Id">
-                            <div class="col-sm-4" style="display: flex; justify-content: center">
-                                <div style="margin: auto; height: 300px">
-                                    @if (item.Imagens.Count() > 0)
-                                    {
-                                        <img src="@item.Imagens.ElementAt(0).Caminho" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px; height: 200px" />
-                                    }
-                                    else
-                                    {
-                                        <img src="~/images/default.jpg" style="max-width:175px; height: 200px" />
-                                    }
-                                    <h4>@item.Titulo</h4>
-                                    <h6 style="color: black">@item.Autores</h6>
-                                    <h3>R$ @item.Preco</h3>
+                            <a asp-action="Details" asp-route-id="@item.Id">
+                                <div class="col-sm-4" style="display: flex; justify-content: center">
+                                    <div style="margin: auto; height: 300px">
+                                        @if (item.Imagens.Count() > 0)
+                                        {
+                                            <img src="@item.Imagens.ElementAt(0).Caminho" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px; height: 200px" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/images/default.jpg" style="max-width:175px; height: 200px" />
+                                        }
+                                        <h4>@item.Titulo</h4>
+                                        <h6 style="color: black">@item.Autores</h6>
+                                        <h3>R$ @item.Preco</h3>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
                         }
                     </div>
                     <br />
