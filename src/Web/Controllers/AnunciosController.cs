@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Web.ViewModels;
+using Infrastructure.Enum;
 
 namespace Web.Controllers
 {
@@ -24,8 +25,12 @@ namespace Web.Controllers
         }
 
         // GET: Anuncios
-        public ActionResult Index()
+        public ActionResult Index(string message)
         {
+            if(message != null)
+            {
+                ViewBag.Deleted = message;
+            }
             var v = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
             return View(Mapper.Map<IEnumerable<Anuncio>, IEnumerable<AnuncioViewModel>>(
                 _anuncioService.GetBySeller(v).Where(i => i.Ativo == true)));
@@ -50,6 +55,7 @@ namespace Web.Controllers
         // GET: Anuncios/Create
         public ActionResult Create()
         {
+            ViewBag.Categoria = Categoria.GetCategoria();
             return View();
         }
 
@@ -87,6 +93,7 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Categoria = Categoria.GetCategoria();
             return View(Mapper.Map<Anuncio, AnuncioViewModel>(anuncio));
         }
 
@@ -135,7 +142,8 @@ namespace Web.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             _anuncioService.Remove(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Anuncios", new { message = "Removido com sucesso" });
+            //return RedirectToAction(nameof(Index));
         }
 
         public ActionResult EditImage(int? id, int? anuncioId)

@@ -5,7 +5,12 @@
 }
 
 <h2>Anúncios</h2>
-
+@{ 
+    if(ViewBag.Deleted != null)
+    {
+        <h2 style="color:red">@ViewBag.Deleted</h2>
+    }
+}
 <p>
     <a asp-action="Create">Cadastrar Anúncio</a>
 </p>

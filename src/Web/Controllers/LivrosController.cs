@@ -29,7 +29,14 @@ namespace Web.Controllers
         {
             if(message != null)
             {
-                ViewBag.UserCreated = "Usuário cadastrado";
+                if(message == "VendaSucesso")
+                {
+                    ViewBag.PurchaseSuccess = "Compra realizada com sucesso";
+                }
+                else
+                {
+                    ViewBag.UserCreated = "Usuário cadastrado";
+                }
             }
             return View(Mapper.Map<List<Tuple<string, IEnumerable<Anuncio>>>,
                                    List<Tuple<string, IEnumerable<AnuncioViewModel>>>>(_anuncioService.GetGroupByCategory(3)));
@@ -79,7 +86,8 @@ namespace Web.Controllers
             if(ModelState.IsValid)
             {
                 _vendaService.Add(Mapper.Map<VendaViewModel, Venda>(venda));
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Livros", new { message = "VendaSucesso" });
+                //return RedirectToAction(nameof(Index));
             }
             return View(venda);
         }
