@@ -11,5 +11,6 @@ namespace Infrastructure.Interfaces.Repositories
         IEnumerable<Venda> GetByCustomer(Guid CustomerId);
         void UpdateStatus(Venda venda);
         void UpdateSellerStatus(int id, int rate);
+        int CountStatus(Guid userId, int status);
     }
 }

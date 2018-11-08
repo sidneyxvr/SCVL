@@ -63,5 +63,10 @@ namespace Infrastructure.Repositories
             _repository.Vendas.Update(venda);
             _repository.SaveChanges();
         }
+
+        public int CountStatus(Guid userId, int status)
+        {
+            return _repository.Vendas.Where(a => a.Status == status && a.VendedorId == userId).Count();
+        }
     }
 }

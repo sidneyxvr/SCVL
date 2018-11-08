@@ -182,5 +182,12 @@ namespace Web.Controllers
             ViewBag.Categorias = _anuncioService.GetAllCategory();
             return View(Mapper.Map<IEnumerable<Anuncio>, IEnumerable<AnuncioViewModel>>(_anuncioService.Search(pesquisar)));
         }
+        
+        [HttpGet]
+        public int Count()
+        {
+            var userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return _vendaService.CountStatus(userId, 0);
+        }
     }
 }

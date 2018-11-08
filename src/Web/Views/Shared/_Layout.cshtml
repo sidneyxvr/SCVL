@@ -35,12 +35,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+
                     @if (this.User.Identity.IsAuthenticated)
                     {
                         <li><a asp-area="" asp-controller="Anuncios" asp-action="Index">Meus Anúncios</a></li>
-                        <li><a asp-area="" asp-controller="Livros" asp-action="Vendas">Minhas Vendas</a></li>
+                        <li><a asp-area="" asp-controller="Livros" asp-action="Vendas">Minhas Vendas 
+                            <span style="font-size:17px; background-color:red ;color: white; border-radius: 100%;" id="merda"></span></a>
+                        </li>
                         <li><a asp-area="" asp-controller="Livros" asp-action="Pedidos">Meus Pedidos</a></li>
-                        
                     }
 
                 </ul>
@@ -87,3 +89,12 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+<script>
+    $.ajax({
+    type: 'GET',
+    url: '@Url.Action("Count", "Livros")',
+        success: function (result) {
+            $('#merda').text(result);
+    }
+ });
+</script>

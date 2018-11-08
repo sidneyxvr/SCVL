@@ -12,6 +12,11 @@ namespace Infrastructure.Services
         private readonly IVendaRepository _repository;
         private readonly IAnuncioRepository _anuncioRepository;
 
+        public VendaService()
+        {
+                
+        }
+
         public VendaService(IVendaRepository repository, IAnuncioRepository anuncioRepository)
         {
             _repository = repository;
@@ -77,6 +82,11 @@ namespace Infrastructure.Services
         public void UpdateSellerStatus(int id, int rate)
         {
             _repository.UpdateSellerStatus(id, rate);
+        }
+
+        public int CountStatus(Guid userId,int status)
+        {
+            return _repository.CountStatus(userId, status);
         }
     }
 }
