@@ -44,6 +44,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("varchar(30)")
                         .HasMaxLength(30);
 
+                    b.Property<string>("ImagemPrincipal");
+
                     b.Property<decimal>("Preco")
                         .HasColumnType("decimal(6,2)");
 

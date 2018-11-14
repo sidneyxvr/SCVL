@@ -85,6 +85,7 @@ namespace Infrastructure.Migrations
                     DataCadastro = table.Column<DateTime>(nullable: false),
                     QuantidadeDisponivel = table.Column<int>(nullable: false),
                     Ativo = table.Column<bool>(nullable: false),
+                    ImagemPrincipal = table.Column<string>(nullable: true),
                     UsuarioId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>

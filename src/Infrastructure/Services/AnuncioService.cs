@@ -54,7 +54,8 @@ namespace Infrastructure.Services
             var groupby = _repository.GetGroupByCategory();
             foreach (var group in groupby)
             {
-                tuples.Add(new Tuple<string, IEnumerable<Anuncio>>(group.Key, group.AsEnumerable().OrderByDescending(a => a.DataCadastro).Take(amountByCategory)));
+                var l = group.AsEnumerable().OrderByDescending(a => a.DataCadastro);
+                tuples.Add(new Tuple<string, IEnumerable<Anuncio>>(group.Key, l.Take(amountByCategory)));
             }
             return tuples;
         }

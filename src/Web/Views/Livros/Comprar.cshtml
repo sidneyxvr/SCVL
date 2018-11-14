@@ -14,9 +14,9 @@
         <input asp-for="VendedorId" type="hidden" />
         <div class="col-md-3">
             @{
-                if (Model.Anuncio.Imagens != null)
+                if (Model.Anuncio.ImagemPrincipal != null)
                 {
-                    <img src="@Model.Anuncio.Imagens.ElementAt(0).Caminho" alt="@Model.Anuncio.Titulo" class="img-thumbnail" />
+                    <img src="@Model.Anuncio.ImagemPrincipal" alt="@Model.Anuncio.Titulo" class="img-thumbnail" />
                 }
                 else
                 {

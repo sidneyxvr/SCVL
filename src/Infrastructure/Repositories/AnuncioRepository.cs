@@ -35,6 +35,7 @@ namespace Infrastructure.Repositories
             return _repository.Anuncios.Include(a => a.Imagens)
                                        .Include(a => a.Usuario)
                                        .Where(a => a.QuantidadeDisponivel > 0)
+                                       .OrderByDescending(a => a.DataCadastro)
                                        .ToList();
         }
 

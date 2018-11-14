@@ -37,7 +37,7 @@ namespace Web.ViewModels
         [Required]
         [Display(Name = "Quantidade Disponível")]
         public int QuantidadeDisponivel { get; set; }
-
+        public string ImagemPrincipal { get; set; }
         public bool Ativo { get; set; } = true;
         public Guid UsuarioId { get; set; }
         public UsuarioViewModel Usuario { get; set; }

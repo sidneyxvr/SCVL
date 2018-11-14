@@ -72,6 +72,10 @@ namespace Web.Controllers
             if(ModelState.IsValid)
             {
                 anuncio.UsuarioId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                if(imagens.Count > 0)
+                {
+                    anuncio.ImagemPrincipal = @"\images\livros\" + imagens.ElementAt(0).FileName;
+                }
                 var anc = _anuncioService.Add(Mapper.Map<AnuncioViewModel, Anuncio>(anuncio));
                 _imagemService.Add(imagens, anc.Id);
                 return RedirectToAction(nameof(Index));
@@ -100,7 +104,7 @@ namespace Web.Controllers
         // POST: Anuncios/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, AnuncioViewModel anuncio)
+        public ActionResult Edit(int id, AnuncioViewModel anuncio, string imagemPrincipal)
         {
             if(id != anuncio.Id)
             {
@@ -111,6 +115,7 @@ namespace Web.Controllers
             {
                 try
                 {
+                    anuncio.ImagemPrincipal = imagemPrincipal;
                     _anuncioService.Update(Mapper.Map<AnuncioViewModel, Anuncio>(anuncio));
                     return RedirectToAction(nameof(Index));
                 }

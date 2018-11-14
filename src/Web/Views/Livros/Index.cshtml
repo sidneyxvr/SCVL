@@ -52,9 +52,9 @@
                             <a asp-action="Details" asp-route-id="@item.Id">
                                 <div class="col-sm-4" style="display: flex; justify-content: center">
                                     <div style="margin: auto; height: 300px">
-                                        @if (item.Imagens.Count() > 0)
+                                        @if (item.ImagemPrincipal != null)
                                         {
-                                            <img src="@item.Imagens.ElementAt(0).Caminho" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px; height: 200px" />
+                                            <img src="@item.ImagemPrincipal" alt="@item.Titulo" class="img-thumbnail img-fluid" style="max-width:175px; height: 200px" />
                                         }
                                         else
                                         {

@@ -95,6 +95,14 @@
     url: '@Url.Action("Count", "Livros")',
         success: function (result) {
             $('#merda').text(result);
+            if (result != 0) {
+                $('#merda').css('background-color', 'red')
+                $('#merda').css('color', 'white')
+            }
+            else {
+                $('#merda').css('background-color', '#222')
+                $('#merda').css('color', '#222')
+            }
     }
  });
 </script>

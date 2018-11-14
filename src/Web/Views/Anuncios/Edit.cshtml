@@ -12,6 +12,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="UsuarioId" type="hidden" />
+            <input asp-for="DataCadastro" type="hidden"/>
             <div class="form-group">
                 <label asp-for="Titulo" class="control-label"></label>
                 <input asp-for="Titulo" class="form-control" />
@@ -49,11 +50,14 @@
             @{
                 for (int i = 0; i < Model.Imagens.Count(); i++)
                 {
-                    <div class="col-sm-4">
-                        <img src="@Model.Imagens.ElementAt(i).Caminho" alt="@Model.Titulo" class="img-thumbnail img-fluid" style="max-width:100px" />
-                        @Html.ActionLink("Editar", "EditImage", new { id = Model.Imagens.ElementAt(i).Id }) |
-                        @Html.ActionLink("Remover", "DeleteImage", new { id = Model.Imagens.ElementAt(i).Id })
-                    </div>
+                <div class="col-sm-4">
+                    <img src="@Model.Imagens.ElementAt(i).Caminho" alt="@Model.Titulo" class="img-thumbnail img-fluid" style="max-width:100px" />
+                    <input type="radio" name="imagemPrincipal" value="@Model.Imagens.ElementAt(i).Caminho" /> Principal?
+                    @Html.ActionLink("Editar", "EditImage", new { id = Model.Imagens.ElementAt(i).Id }) |
+                    @Html.ActionLink("Remover", "DeleteImage", new { id = Model.Imagens.ElementAt(i).Id })
+                    
+
+                </div>
                 }
                 for (int i = Model.Imagens.Count(); i < 3; i++)
                 {

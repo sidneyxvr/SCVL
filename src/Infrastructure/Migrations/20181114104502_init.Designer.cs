@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SistemaDbContext))]
-    [Migration("20180907015626_init")]
+    [Migration("20181114104502_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,8 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(30)")
                         .HasMaxLength(30);
+
+                    b.Property<string>("ImagemPrincipal");
 
                     b.Property<decimal>("Preco")
                         .HasColumnType("decimal(6,2)");
